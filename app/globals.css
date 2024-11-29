@@ -74,3 +74,13 @@
 .button-secondary {
   @apply px-4 py-2 bg-secondary-100 text-gray-800 rounded-lg hover:bg-secondary-200 transition-colors;
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

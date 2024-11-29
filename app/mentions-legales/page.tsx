@@ -15,10 +15,10 @@ export default function MentionsLegales() {
         <section>
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">1. Informations légales</h2>
           <p>
-            Le site btov-dev.fr est édité par B to V Développement, entreprise basée à La Rochelle, France.
+            Le site b to v developpement est édité par B to V Développement, entreprise basée à La Rochelle, France.
           </p>
           <p className="mt-2">
-            Email : contact@btov-dev.fr
+            Email : btovdeveloppement@gmail.com
           </p>
         </section>
 

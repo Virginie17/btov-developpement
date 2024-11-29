@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { Specifications } from '@/types/specifications';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   try {
-    const specifications: Specifications = await request.json();
+    const formData = await request.json();
 
     // Créer le transporteur SMTP
     const transporter = nodemailer.createTransport({
@@ -19,32 +18,28 @@ export async function POST(request: Request) {
 
     // Formater le contenu de l'email
     const emailContent = `
-      <h1>Nouveau Cahier des Charges</h1>
+      <h1>Nouvelle demande de cahier des charges</h1>
       
-      <h2>1. Informations sur l'entreprise</h2>
-      <p><strong>Nom:</strong> ${specifications.company_info.name}</p>
-      <p><strong>Activités:</strong> ${specifications.company_info.activities}</p>
-      <p><strong>Sources de revenus:</strong> ${specifications.company_info.revenue_sources}</p>
-      <p><strong>Valeurs:</strong> ${specifications.company_info.values}</p>
-      <p><strong>Positionnement:</strong> ${specifications.company_info.brand_positioning}</p>
-      <p><strong>Avantages concurrentiels:</strong> ${specifications.company_info.competitive_advantages}</p>
-      <p><strong>Concurrents:</strong> ${specifications.company_info.competitors}</p>
+      <h2>Informations du contact</h2>
+      <p><strong>Nom:</strong> ${formData.name}</p>
+      <p><strong>Email:</strong> ${formData.email}</p>
+      <p><strong>Téléphone:</strong> ${formData.phone}</p>
+      <p><strong>Entreprise:</strong> ${formData.company}</p>
 
-      <h2>2. Contact Principal</h2>
-      <p><strong>Nom:</strong> ${specifications.primary_contact.name}</p>
-      <p><strong>Rôle:</strong> ${specifications.primary_contact.role}</p>
-      <p><strong>Responsabilité:</strong> ${specifications.primary_contact.responsibility}</p>
-      <p><strong>Email:</strong> ${specifications.primary_contact.email}</p>
-      <p><strong>Téléphone:</strong> ${specifications.primary_contact.phone}</p>
+      <h2>Informations du projet</h2>
+      <p><strong>Type de projet:</strong> ${formData.projectType}</p>
+      <p><strong>Budget:</strong> ${formData.budget}</p>
+      <p><strong>Date limite:</strong> ${formData.deadline}</p>
 
-      <!-- Ajouter les autres sections du cahier des charges -->
+      <h2>Description du projet</h2>
+      <p>${formData.description}</p>
     `;
 
     // Options de l'email
     const mailOptions = {
       from: process.env.SMTP_FROM,
       to: process.env.SMTP_TO,
-      subject: `Nouveau cahier des charges - ${specifications.company_info.name}`,
+      subject: `Nouvelle demande de cahier des charges - ${formData.company}`,
       html: emailContent,
     };
 
@@ -52,13 +47,13 @@ export async function POST(request: Request) {
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json(
-      { message: 'Cahier des charges envoyé avec succès' },
+      { message: 'Email envoyé avec succès' },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Erreur lors de l\'envoi du cahier des charges:', error);
+    console.error('Erreur lors de l\'envoi de l\'email:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de l\'envoi du cahier des charges' },
+      { error: 'Erreur lors de l\'envoi de l\'email' },
       { status: 500 }
     );
   }

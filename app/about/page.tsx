@@ -55,7 +55,7 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-gray-600">
               <p>
-                B to V Développement est née d une passion pour le développement web et d une volonté de créer des solutions digitales sur mesure pour mess clients.
+                B to V Développement est née d une passion pour le développement web et d une volonté de créer des solutions digitales sur mesure pour mes clients.
               </p>
               <p>
                 Basée à La Rochelle, ma société accompagne les entreprises dans leur transformation numérique en proposant des services de création de sites web, de refonte, d optimisation et de référencement SEO.

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BlogPost } from '@/types/blog';
-
+import { BlogPost } from '../../../types/blog';
 const DEFAULT_IMAGE = '/images/default-blog-cover.jpg';
 const DEFAULT_AVATAR = '/images/default-avatar.jpg';
 

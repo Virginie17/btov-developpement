@@ -8,7 +8,7 @@ const projects = [
     id: 1,
     title: "Site E-commerce Mode",
     description: "Boutique en ligne responsive avec système de paiement sécurisé et interface utilisateur moderne.",
-    image: "/images/portfolio/ecommerce.webp",
+    image: "/portfolio/ecommerce mode.webp",
     category: "ecommerce",
     technologies: ["Next.js", "Stripe", "Tailwind CSS"],
     link: "#",
@@ -23,7 +23,7 @@ const projects = [
     id: 2,
     title: "Refonte Site Immobilier",
     description: "Refonte complète d'un site immobilier avec amélioration de l'UX et des performances.",
-    image: "/images/portfolio/real-estate.webp",
+    image: "/portfolio/site immobilier.webp",
     category: "refonte",
     technologies: ["React", "Next.js", "PostgreSQL"],
     link: "#",
@@ -38,7 +38,7 @@ const projects = [
     id: 3,
     title: "Optimisation SEO - Blog Lifestyle",
     description: "Amélioration du référencement naturel avec une augmentation de 150% du trafic organique.",
-    image: "/images/portfolio/seo-blog.webp",
+    image: "/portfolio/blog lifestyle.webp",
     category: "seo",
     technologies: ["WordPress", "Schema.org", "Google Analytics"],
     link: "#",
@@ -53,7 +53,7 @@ const projects = [
     id: 4,
     title: "Site Vitrine Restaurant",
     description: "Site moderne avec réservation en ligne et menu interactif.",
-    image: "/images/portfolio/restaurant.webp",
+    image: "/portfolio/site vitrine restaurant.webp",
     category: "web",
     technologies: ["Next.js", "Tailwind CSS", "Vercel"],
     link: "#",
@@ -68,7 +68,7 @@ const projects = [
     id: 5,
     title: "E-commerce Produits Bio",
     description: "Plateforme de vente en ligne de produits biologiques avec abonnement mensuel.",
-    image: "/images/portfolio/bio-shop.webp",
+    image: "/portfolio/ecommerce produit bio.webp",
     category: "ecommerce",
     technologies: ["Shopify", "React", "Node.js"],
     link: "#",
@@ -83,7 +83,7 @@ const projects = [
     id: 6,
     title: "Refonte UX Application Mobile",
     description: "Refonte complète de l'expérience utilisateur d'une application de fitness.",
-    image: "/images/portfolio/fitness-app.webp",
+    image: "/portfolio/refonte application mobile.webp",
     category: "refonte",
     technologies: ["React Native", "Firebase", "Redux"],
     link: "#",
@@ -98,7 +98,7 @@ const projects = [
     id: 7,
     title: "Optimisation SEO E-commerce",
     description: "Amélioration du référencement et des conversions pour une boutique en ligne.",
-    image: "/images/portfolio/seo-ecommerce.webp",
+    image: "/portfolio/seo.webp",
     category: "seo",
     technologies: ["Prestashop", "Google Search Console", "SEMrush"],
     link: "#",
@@ -116,7 +116,7 @@ export default function Portfolio() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
   const categories = [
-    { id: 'all', name: 'Tous les projets' },
+    { id: 'all', name: 'Tous' },
     { id: 'web', name: 'Sites Web' },
     { id: 'ecommerce', name: 'E-commerce' },
     { id: 'refonte', name: 'Refonte' },
@@ -128,38 +128,45 @@ export default function Portfolio() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 py-8 sm:py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8 sm:mb-12"
       >
-        <h1 className="text-4xl font-bold mb-4">Mon Portfolio</h1>
-        <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Mon Portfolio</h1>
+        <p className="text-base sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto px-4">
           Découvrez mes dernières réalisations en développement web
         </p>
       </motion.div>
 
-      {/* Filtres */}
-      <div className="flex justify-center gap-4 mb-12">
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => setSelectedCategory(category.id)}
-            className={`px-4 py-2 rounded-full transition-colors ${
-              selectedCategory === category.id
-                ? 'bg-primary-500 text-white'
-                : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
-            }`}
-          >
-            {category.name}
-          </button>
-        ))}
-      </div>
-
-      {/* Grille de projets */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Filtres scrollables sur mobile */}
+      <div className="relative mb-8">
+  <div className="flex overflow-x-auto sm:justify-center gap-3 px-4 -mx-4 sm:mx-0 pb-4 sm:pb-0 no-scrollbar">
+    <div className="flex gap-3 sm:flex-wrap">
+      {categories.map((category) => (
+        <button
+          key={category.id}
+          onClick={() => setSelectedCategory(category.id)}
+          className={`flex-none px-4 py-2 rounded-full transition-colors text-sm whitespace-nowrap ${
+            selectedCategory === category.id
+              ? 'bg-primary-500 text-white'
+              : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+          }`}
+        >
+          {category.name}
+        </button>
+      ))}
+    </div>
+  </div>
+  
+  {/* Indicateurs de défilement */}
+  <div className="absolute left-0 top-0 w-4 h-full bg-gradient-to-r from-white to-transparent sm:hidden" />
+  <div className="absolute right-0 top-0 w-4 h-full bg-gradient-to-l from-white to-transparent sm:hidden" />
+</div>
+      {/* Grille de projets responsive */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {filteredProjects.map((project) => (
           <motion.div
             key={project.id}
@@ -169,11 +176,12 @@ export default function Portfolio() {
             onHoverEnd={() => setHoveredProject(null)}
             className="group relative bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-64 w-full overflow-hidden">
+            <div className="relative h-48 sm:h-64 w-full overflow-hidden">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className={`object-cover transition-all duration-500 ${
                   hoveredProject === project.id ? 'scale-110' : 'scale-100'
                 }`}
@@ -181,9 +189,9 @@ export default function Portfolio() {
               <div className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
                 hoveredProject === project.id ? 'opacity-100' : 'opacity-0'
               }`}>
-                <div className="h-full flex flex-col justify-center items-center text-white p-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <h4 className="text-lg font-semibold mb-2">Fonctionnalités :</h4>
-                  <ul className="list-disc list-inside text-sm">
+                <div className="h-full flex flex-col justify-center items-center text-white p-4 sm:p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <h4 className="text-base sm:text-lg font-semibold mb-2">Fonctionnalités :</h4>
+                  <ul className="list-disc list-inside text-xs sm:text-sm">
                     {project.features.map((feature, index) => (
                       <li key={index}>{feature}</li>
                     ))}
@@ -191,29 +199,24 @@ export default function Portfolio() {
                 </div>
               </div>
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-zinc-900 dark:text-white">
+            <div className="p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-zinc-900 dark:text-white">
                 {project.title}
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+              <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mb-4">
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
                 {project.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="text-sm px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full"
+                    className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
-              <a
-                href={project.link}
-                className="inline-block text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
-              >
-                Voir le projet →
-              </a>
+              
             </div>
           </motion.div>
         ))}

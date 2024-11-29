@@ -12,7 +12,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <div className="space-y-2">
               <p>La Rochelle, France</p>
-              <p>b to v developpement@gmail.com</p>
+              <p>btovdeveloppement@gmail.com</p>
+              <p>SIRET : 93330480000016</p>
             </div>
           </div>
 

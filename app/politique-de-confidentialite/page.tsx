@@ -70,7 +70,7 @@ export default function PolitiqueConfidentialite() {
             Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits, vous pouvez nous contacter à :
           </p>
           <p className="mt-2">
-            Email : contact@btov-dev.fr
+            Email : btovdeveloppement@gmail.com
           </p>
         </section>
       </div>

@@ -31,43 +31,44 @@ const services = [
 export default function Home() {
   return (
     <>
-      {/* Hero Section avec image de La Rochelle en arrière-plan */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section Responsive */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/la_rochelle.webp"
+            src="/images/tour2.webp"
             alt="La Rochelle"
             fill
+            sizes="100vw"
             className="object-cover brightness-[0.7]"
             priority
             quality={100}
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-white space-y-6"
+            className="text-white space-y-4 sm:space-y-6"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
               Transformons vos idées<br />
               <span className="text-primary-400">en réalité digitale</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-100 drop-shadow-md max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-100 drop-shadow-md max-w-2xl mx-auto px-4">
               Création de sites web professionnels à La Rochelle
             </p>
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 href="/contact"
-                className="bg-primary-500 text-white px-8 py-4 rounded-lg font-medium hover:bg-primary-600 transition-all hover:scale-105 shadow-lg"
+                className="w-full sm:w-auto bg-primary-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-primary-600 transition-all hover:scale-105 shadow-lg text-center"
               >
                 Démarrer un projet
               </Link>
               <Link
                 href="/portfolio"
-                className="bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-lg font-medium hover:bg-white/20 transition-all border border-white/30"
+                className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-white/20 transition-all border border-white/30 text-center"
               >
                 Voir mes réalisations
               </Link>
@@ -76,52 +77,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-20">
+      {/* Services Section Responsive */}
+      <section className="py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Mes Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Mes Services</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                className="p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
               >
                 <div className="text-primary-600 dark:text-primary-400 mb-4">{service.icon}</div>
-                <h3 className="text-xl font-semibold mb-2 dark:text-white">{service.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">{service.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{service.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Section avec photo de profil */}
-      <section className="bg-secondary-50 dark:bg-gray-800 py-20">
+      {/* About Section Responsive */}
+      <section className="bg-secondary-50 dark:bg-gray-800 py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div className="relative">
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="/images/la rochelle3.webp"
                   alt="La Rochelle"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-48 h-48 rounded-xl overflow-hidden shadow-lg">
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 sm:w-48 sm:h-48 rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="/images/photo.webp"
-                  alt="Virginie  - Développeuse Web"
+                  alt="Virginie - Développeuse Web"
                   fill
+                  sizes="(max-width: 768px) 8rem, 12rem"
                   className="object-cover"
                 />
               </div>
             </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-6 dark:text-white">
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 dark:text-white">
                 Développement Web à La Rochelle
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6">
                 Passionnée par le développement web,
                 je mets mes compétences au service de vos projets digitaux. Basée à La Rochelle,
                 j'accompagne les entreprises locales et nationales dans leur transformation numérique.
@@ -132,7 +135,7 @@ export default function Home() {
               >
                 En savoir plus
                 <svg
-                  className="ml-2 w-5 h-5"
+                  className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
