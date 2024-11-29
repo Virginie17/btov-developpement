@@ -34,15 +34,16 @@ export default function Home() {
       {/* Hero Section Responsive */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="/images/tour2.webp"
-            alt="La Rochelle"
-            fill
-            sizes="100vw"
-            className="object-cover brightness-[0.7]"
-            priority
-            quality={100}
-          />
+        <Image
+  src="/images/tour2.webp"
+  alt="Vue panoramique des tours de La Rochelle au coucher du soleil"
+  fill
+  sizes="100vw"
+  quality={80}
+  placeholder="blur"
+  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
+  className="object-cover brightness-[0.7]"
+/>
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -104,7 +105,7 @@ export default function Home() {
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="/images/la rochelle3.webp"
-                  alt="La Rochelle"
+                  alt="Port de La Rochelle avec ses bateaux et architecture historique"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"

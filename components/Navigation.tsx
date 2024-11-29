@@ -15,24 +15,28 @@ export default function Navigation() {
   return (
     <header className="fixed top-0 z-50 w-full bg-white dark:bg-gray-900 shadow-md">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2"
+        aria-label="Retour à l'accueil">
           <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-lg">
-            <Image
-              src="/images/logo.webp"
-              alt="B to V Développement"
-              fill
-              className="object-contain"
-              priority
-              sizes="(max-width: 768px) 3rem, 3rem"
-            />
+          <Image
+  src="/images/logo.webp"
+  alt=""
+  width={48}
+  height={48}
+  className="object-contain"
+  priority
+  quality={80}
+/>
           </div>
           <span className="text-xl font-bold hidden sm:inline text-primary-600">B to V developpement</span>
         </Link>
+        
 
         {/* Bouton Menu Mobile */}
         <button 
           className="md:hidden text-gray-600 hover:text-primary-500"
           onClick={toggleMenu}
+          aria-label="Toggle menu"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
