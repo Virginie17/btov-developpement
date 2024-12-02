@@ -1,4 +1,4 @@
-import { BlogPost } from '@/types/blog';
+import { BlogPost } from '../types/blog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CalendarDays, Clock } from 'lucide-react';

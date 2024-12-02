@@ -1,5 +1,4 @@
 {
-  "/cahier-des-charges/page": "app/cahier-des-charges/page.js",
-  "/page": "app/page.js",
-  "/contact/page": "app/contact/page.js"
+  "/not-found": "app/not-found.js",
+  "/page": "app/page.js"
 }

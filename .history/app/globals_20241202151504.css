@@ -1,0 +1,116 @@
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    background: linear-gradient(135deg, #4F46E5 0%, #ffffff 50%, #9333EA 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+/* Styles globaux pour les cartes et conteneurs */
+.glass-card {
+  @apply bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6;
+}
+
+/* Styles globaux pour les formulaires */
+.form-input {
+  @apply w-full bg-gray-50/50 border-0 border-b-2 border-gray-300 focus:border-blue-600 
+         focus:ring-0 focus:bg-white transition-all duration-300 px-4 py-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* Styles globaux pour les boutons */
+.btn-primary {
+  @apply w-full py-3 px-6 rounded-full font-semibold text-white
+         bg-gradient-to-r from-blue-600 to-purple-600
+         hover:scale-[1.02] transform transition-all duration-300
+         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Styles pour les titres avec dégradé */
+.gradient-heading {
+  @apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+}
+
+/* Animations et transitions */
+.hover-shadow-effect {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Messages de statut */
+.status-message {
+  @apply p-4 rounded-lg mb-4 text-center font-medium;
+}
+
+.status-success {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-error {
+  @apply bg-red-100 text-red-800;
+}
+
+/* Utilitaires */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
