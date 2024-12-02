@@ -116,4 +116,23 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}
+
+/* Styles pour les filtres du portfolio */
+.filter-container {
+  @apply relative flex overflow-x-auto gap-4 pb-6 -mx-4 px-4;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-button {
+  @apply flex-none px-5 py-2.5 rounded-full transition-all;
+  scroll-snap-align: start;
 }

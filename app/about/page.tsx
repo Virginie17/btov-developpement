@@ -17,6 +17,7 @@ export default function About() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               À Propos de B to V Développement
             </h1>
+            
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Expertise et passion au service de vos projets web
             </p>
