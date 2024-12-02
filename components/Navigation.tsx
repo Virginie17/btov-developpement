@@ -2,36 +2,35 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 export default function Navigation() {
-  const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-white dark:bg-gray-900 shadow-md">
+    <header className="fixed top-0 z-50 w-full bg-white shadow-md">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2"
         aria-label="Retour à l'accueil">
           <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-lg">
-          <Image
-  src="/images/logo.webp"
-  alt=""
-  width={48}
-  height={48}
-  className="object-contain"
-  priority
-  quality={80}
-/>
+            <Image
+              src="/images/logo.webp"
+              alt="Logo B to V Développement"
+              width={48}
+              height={48}
+              className="object-contain"
+              priority
+              quality={85}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC0zLysvJSpNPjg2Pj06MikvRV44QjNBOTo7P0JHSkdGUENGPz7/2wBDARUXFx4eHh4fHx8+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj7/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            />
           </div>
           <span className="text-xl font-bold hidden sm:inline text-primary-600">B to V developpement</span>
         </Link>
         
-
         {/* Bouton Menu Mobile */}
         <button 
           className="md:hidden text-gray-600 hover:text-primary-500"
@@ -54,7 +53,7 @@ export default function Navigation() {
 
         {/* Menu Mobile */}
         {isMenuOpen && (
-          <div className="absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg md:hidden">
+          <div className="absolute top-16 left-0 right-0 bg-white shadow-lg md:hidden">
             <div className="flex flex-col p-4 space-y-4">
               <Link href="/" className="text-gray-600 hover:text-primary-500 transition-colors" onClick={toggleMenu}>Accueil</Link>
               <Link href="/about" className="text-gray-600 hover:text-primary-500 transition-colors" onClick={toggleMenu}>À propos</Link>

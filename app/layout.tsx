@@ -4,7 +4,6 @@ import './globals.css'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 
-
 const outfit = Outfit({ 
   subsets: ['latin'],
   display: 'swap',
@@ -22,14 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`${outfit.className} bg-white dark:bg-[#0A0A0A] text-zinc-900 dark:text-zinc-100 antialiased transition-colors`}>
-        
+      <body className={`${outfit.className} min-h-screen antialiased`}>
+        <div className="relative">
           <Navigation />
-          <main className="min-h-screen pt-16">
+          <main className="min-h-screen pt-16 px-4 sm:px-6 lg:px-8">
             {children}
           </main>
           <Footer />
-        
+        </div>
       </body>
     </html>
   )

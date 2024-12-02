@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
   :root {
@@ -55,26 +55,59 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    background: linear-gradient(135deg, #4F46E5 0%, #ffffff 50%, #9333EA 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
-/* Ajout de styles pour améliorer l'apparence générale */
+/* Styles globaux pour les cartes et conteneurs */
+.glass-card {
+  @apply bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6;
+}
+
+/* Styles globaux pour les formulaires */
+.form-input {
+  @apply w-full bg-gray-50/50 border-0 border-b-2 border-gray-300 focus:border-blue-600 
+         focus:ring-0 focus:bg-white transition-all duration-300 px-4 py-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* Styles globaux pour les boutons */
+.btn-primary {
+  @apply w-full py-3 px-6 rounded-full font-semibold text-white
+         bg-gradient-to-r from-blue-600 to-purple-600
+         hover:scale-[1.02] transform transition-all duration-300
+         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Styles pour les titres avec dégradé */
+.gradient-heading {
+  @apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+}
+
+/* Animations et transitions */
 .hover-shadow-effect {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
 }
 
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-primary-700;
+/* Messages de statut */
+.status-message {
+  @apply p-4 rounded-lg mb-4 text-center font-medium;
 }
 
-.button-primary {
-  @apply px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors;
+.status-success {
+  @apply bg-green-100 text-green-800;
 }
 
-.button-secondary {
-  @apply px-4 py-2 bg-secondary-100 text-gray-800 rounded-lg hover:bg-secondary-200 transition-colors;
+.status-error {
+  @apply bg-red-100 text-red-800;
 }
 
+/* Utilitaires */
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
