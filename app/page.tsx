@@ -3,9 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Code, Globe, LineChart, Paintbrush } from 'lucide-react'
+import { Code, Globe, LineChart, Paintbrush, MessageSquare } from 'lucide-react'
 
 const services = [
+  {
+    icon: <MessageSquare className="w-8 h-8" />,
+    title: 'Prompt Engineering',
+    description: 'Optimisation des interactions avec l\'IA pour des résultats performants.'
+  },
   {
     icon: <Code className="w-8 h-8" />,
     title: 'Création de sites web',
