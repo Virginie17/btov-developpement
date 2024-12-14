@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.btov-dev.com/sitemap.xml
+Sitemap: https://www.btov-dev./sitemap.xml
