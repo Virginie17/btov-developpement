@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 const defaultMetadata: Metadata = {
-  metadataBase: new URL('https://www.btov-dev.fr'),
+  metadataBase: new URL('https://www.btov-dev.com'),
   title: {
     default: 'Expert Prompt Engineering & Développement Web La Rochelle | B to V Développement',
     template: '%s | B to V Développement',

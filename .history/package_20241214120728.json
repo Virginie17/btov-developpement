@@ -6,13 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap",
+    "analyze-seo": "ts-node scripts/analyze-search-console.ts"
   },
   "dependencies": {
+    "@google-analytics/data": "^4.11.0",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.1",
     "@types/nodemailer": "^6.4.17",
+    "dotenv": "^16.4.7",
     "framer-motion": "^11.12.0",
+    "googleapis": "^144.0.0",
     "lucide-react": "^0.461.0",
     "next": "14.0.3",
     "nodemailer": "^6.9.16",
