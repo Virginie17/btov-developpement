@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Code, Globe, LineChart, Paintbrush, MessageSquare } from 'lucide-react'
+import PromoBanner from '@/components/PromoBanner'
+import PromoSection from '@/components/PromoSection'
 
 const services = [
   {
@@ -36,6 +38,7 @@ const services = [
 export default function Home() {
   return (
     <>
+      <PromoBanner />
       {/* Hero Section Responsive */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -82,6 +85,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <PromoSection />
 
       {/* Services Section Responsive */}
       <section className="py-12 sm:py-20">
