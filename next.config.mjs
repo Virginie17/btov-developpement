@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   images: {
     domains: ['www.btov-dev.com'],
     unoptimized: true
@@ -8,20 +7,10 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
-  webpack: (config) => {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-    };
-    return config;
-  },
-  // Ajout de la configuration pour ignorer certains fichiers lors du build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Désactivation de certaines optimisations qui peuvent causer des problèmes
+  swcMinify: false,
+  poweredByHeader: false,
+  reactStrictMode: true,
   // Configuration des headers pour l'API
   async headers() {
     return [
