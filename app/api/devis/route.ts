@@ -1,22 +1,16 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-// Vérification de la clé API Resend
-if (!process.env.RESEND_API_KEY) {
-  throw new Error('RESEND_API_KEY is not defined in environment variables');
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json(
-      { error: 'Server configuration error' },
+      { error: 'Server configuration error: Missing API key' },
       { status: 500 }
     );
   }
 
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const { formData, serviceTitle } = await request.json();
     
     if (!formData || !serviceTitle) {
