@@ -10,6 +10,7 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.btov-dev.com'),
   title: 'B to V Développement | Création de sites web à La Rochelle',
   description: 'Agence de développement web à La Rochelle spécialisée dans la création de sites, la refonte, l\'optimisation et le référencement SEO. Devis gratuit pour votre projet web.',
   keywords: 'développement web, création site web, La Rochelle, agence web, SEO, site internet, développeur web, création site internet, refonte site web',
