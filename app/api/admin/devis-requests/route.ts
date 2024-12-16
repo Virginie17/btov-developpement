@@ -1,8 +1,26 @@
 import { NextResponse } from 'next/server';
 
+interface DevisRequest {
+  id: string;
+  date: string;
+  status: 'pending' | 'sent' | 'converted';
+  formData: {
+    companyName: string;
+    contactName: string;
+    address: string;
+    clientEmail: string;
+    clientPhone: string;
+    projectDescription: string;
+  };
+  serviceTitle: string;
+  basePrice: number;
+  features: string[];
+  finalPrice?: number;
+}
+
 // Simuler une base de données pour l'exemple
 // Dans un vrai projet, utilisez une vraie base de données
-let devisRequests: any[] = [];
+const devisRequests: DevisRequest[] = [];
 
 export async function GET() {
   return NextResponse.json(devisRequests);
@@ -10,7 +28,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const data = await request.json();
-  const newRequest = {
+  const newRequest: DevisRequest = {
     id: Date.now().toString(),
     date: new Date().toISOString(),
     status: 'pending',
@@ -31,7 +49,7 @@ export async function PATCH(request: Request) {
 
   devisRequests[requestIndex] = {
     ...devisRequests[requestIndex],
-    status
+    status: status as DevisRequest['status']
   };
 
   return NextResponse.json(devisRequests[requestIndex]);
