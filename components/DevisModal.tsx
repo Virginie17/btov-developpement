@@ -41,14 +41,12 @@ const DevisModal = ({ isOpen, onClose, serviceTitle, basePrice, features }: Devi
 
   const sendDevisRequest = async () => {
     try {
-      const response = await fetch('/api/send-devis-request', {
+      const response = await fetch('/api/send-devis', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: 'btovdeveloppement@gmail.com',
-          subject: `Nouvelle demande de devis - ${serviceTitle}`,
           formData,
           serviceTitle,
           basePrice,
