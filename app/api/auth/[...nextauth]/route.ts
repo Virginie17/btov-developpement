@@ -22,29 +22,30 @@ const handler = NextAuth({
           return {
             id: '1',
             email: credentials.email,
-            name: 'Admin'
+            name: 'Admin',
+            role: 'admin'
           };
         }
         return null;
       }
     })
   ],
-  pages: {
-    signIn: '/admin/login',
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = 'admin';
+        token.role = user.role;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: any }) {
+    async session({ session, token }) {
       if (session?.user) {
         session.user.role = token.role;
       }
       return session;
     }
+  },
+  pages: {
+    signIn: '/admin/login',
   }
 });
 

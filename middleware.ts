@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-    if (
-      req.nextUrl.pathname.startsWith("/admin") &&
-      req.nextUrl.pathname !== "/admin/login" &&
-      !req.nextauth.token?.role
-    ) {
-      return NextResponse.redirect(new URL("/admin/login", req.url));
+    // Protéger uniquement les routes admin
+    if (req.nextUrl.pathname.startsWith("/admin")) {
+      // Vérifier l'authentification pour les routes admin
+      if (!req.nextauth.token?.role) {
+        return NextResponse.redirect(new URL("/admin/login", req.url));
+      }
     }
     return NextResponse.next();
   },
@@ -19,6 +19,7 @@ export default withAuth(
   }
 );
 
+// Définir explicitement les routes à protéger
 export const config = {
-  matcher: ["/admin/:path*"],
-};
+  matcher: ["/admin/:path*"]
+}

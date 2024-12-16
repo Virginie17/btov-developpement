@@ -215,120 +215,122 @@ const DevisModal = ({ isOpen, onClose, serviceTitle, basePrice, features }: Devi
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="fixed inset-0 flex items-center justify-center p-4"
+      className="fixed inset-0 overflow-y-auto"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
       ariaHideApp={false}
     >
-      <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">Demande de devis - {serviceTitle}</h2>
-        
-        <div className="space-y-6">
-          <div>
-            <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
-              Nom de l'entreprise
-            </label>
-            <input
-              type="text"
-              name="companyName"
-              id="companyName"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.companyName}
-              onChange={handleInputChange}
-              required
-            />
+      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
+        <div className="bg-white rounded-lg p-4 w-full sm:w-[90%] md:w-[60%] lg:w-[40%] max-w-lg mx-auto relative transform translate-y-8">
+          <h2 className="text-2xl font-bold mb-4">Demande de devis - {serviceTitle}</h2>
+          
+          <div className="space-y-6">
+            <div>
+              <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
+                Nom de l'entreprise
+              </label>
+              <input
+                type="text"
+                name="companyName"
+                id="companyName"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.companyName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contactName" className="block text-sm font-medium text-gray-700">
+                Nom du contact
+              </label>
+              <input
+                type="text"
+                name="contactName"
+                id="contactName"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.contactName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                Adresse
+              </label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="clientEmail" className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                name="clientEmail"
+                id="clientEmail"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.clientEmail}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="clientPhone" className="block text-sm font-medium text-gray-700">
+                Téléphone
+              </label>
+              <input
+                type="tel"
+                name="clientPhone"
+                id="clientPhone"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.clientPhone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-700">
+                Description du projet
+              </label>
+              <textarea
+                name="projectDescription"
+                id="projectDescription"
+                rows={4}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                value={formData.projectDescription}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="contactName" className="block text-sm font-medium text-gray-700">
-              Nom du contact
-            </label>
-            <input
-              type="text"
-              name="contactName"
-              id="contactName"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.contactName}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="flex justify-end space-x-4 mt-6">
+            <button
+              type="button"
+              className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              onClick={sendDevisRequest}
+            >
+              Envoyer ma demande
+            </button>
+            <button
+              type="button"
+              className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              onClick={onClose}
+            >
+              Fermer
+            </button>
           </div>
-
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-              Adresse
-            </label>
-            <input
-              type="text"
-              name="address"
-              id="address"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="clientEmail" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              name="clientEmail"
-              id="clientEmail"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.clientEmail}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="clientPhone" className="block text-sm font-medium text-gray-700">
-              Téléphone
-            </label>
-            <input
-              type="tel"
-              name="clientPhone"
-              id="clientPhone"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.clientPhone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-700">
-              Description du projet
-            </label>
-            <textarea
-              name="projectDescription"
-              id="projectDescription"
-              rows={4}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              value={formData.projectDescription}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="flex justify-end space-x-4 mt-6">
-          <button
-            type="button"
-            className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            onClick={sendDevisRequest}
-          >
-            Envoyer ma demande
-          </button>
-          <button
-            type="button"
-            className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            onClick={onClose}
-          >
-            Fermer
-          </button>
         </div>
       </div>
     </Modal>

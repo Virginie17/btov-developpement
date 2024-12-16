@@ -1,5 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/api/send-devis-request/route": "app/api/send-devis-request/route.js",
-  "/tarifs/page": "app/tarifs/page.js"
-}
