@@ -41,7 +41,7 @@ const DevisModal = ({ isOpen, onClose, serviceTitle, basePrice, features }: Devi
 
   const sendDevisRequest = async () => {
     try {
-      const response = await fetch('/api/send-devis', {
+      const response = await fetch('/api/devis', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,11 +54,17 @@ const DevisModal = ({ isOpen, onClose, serviceTitle, basePrice, features }: Devi
         }),
       });
 
-      if (response.ok) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
         alert('Votre demande a été envoyée avec succès. Nous vous contacterons rapidement pour la suite.');
         onClose();
       } else {
-        throw new Error('Erreur lors de l\'envoi de la demande');
+        throw new Error(result.error || 'Une erreur est survenue');
       }
     } catch (error) {
       console.error('Erreur:', error);
