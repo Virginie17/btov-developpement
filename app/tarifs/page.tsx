@@ -17,20 +17,22 @@ const ServiceCard = ({ title, price, timeframe, features }: ServiceProps) => {
   const basePrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <div className="mb-4">
-        <p className="text-2xl font-bold text-blue-600">{price}</p>
-        {timeframe && <p className="text-gray-600 text-sm">{timeframe}</p>}
+    <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col h-full">
+      <div className="flex-grow">
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+        <div className="mb-4">
+          <p className="text-2xl font-bold text-blue-600">{price}</p>
+          {timeframe && <p className="text-gray-600 text-sm">{timeframe}</p>}
+        </div>
+        <ul className="space-y-2">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+              <span className="text-gray-700">{feature}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="space-y-2">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-start gap-2">
-            <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-            <span className="text-gray-700">{feature}</span>
-          </li>
-        ))}
-      </ul>
       <div className="mt-6">
         <button
           onClick={() => setIsModalOpen(true)}
