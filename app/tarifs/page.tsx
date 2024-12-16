@@ -1,5 +1,9 @@
+'use client';
+
 import { Check } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import DevisModal from '@/components/DevisModal';
 
 type ServiceProps = {
   title: string;
@@ -8,153 +12,245 @@ type ServiceProps = {
   features: string[];
 };
 
-const ServiceCard = ({ title, price, timeframe, features }: ServiceProps) => (
-  <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-    <h3 className="text-xl font-semibold mb-2">{title}</h3>
-    <div className="mb-4">
-      <p className="text-2xl font-bold text-blue-600">{price}</p>
-      {timeframe && <p className="text-gray-600 text-sm">{timeframe}</p>}
+const ServiceCard = ({ title, price, timeframe, features }: ServiceProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const basePrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
+
+  return (
+    <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <div className="mb-4">
+        <p className="text-2xl font-bold text-blue-600">{price}</p>
+        {timeframe && <p className="text-gray-600 text-sm">{timeframe}</p>}
+      </div>
+      <ul className="space-y-2">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-start gap-2">
+            <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+            <span className="text-gray-700">{feature}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+        >
+          Demander un devis
+        </button>
+      </div>
+      <DevisModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        serviceTitle={title}
+        basePrice={basePrice}
+        features={features}
+      />
     </div>
-    <ul className="space-y-2">
-      {features.map((feature, index) => (
-        <li key={index} className="flex items-start gap-2">
-          <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-          <span className="text-gray-700">{feature}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+  );
+};
 
 export default function TarifsPage() {
   const services = {
     sitesVitrines: [
       {
         title: "Pack Essentiel",
-        price: "à partir de 800 €",
+        price: "à partir de 1 200 €",
         features: [
-          "Site 1 à 3 pages",
-          "Design personnalisé",
-          "Compatible mobile et SEO basique",
+          "Site vitrine 1 à 3 pages",
+          "Design moderne et personnalisé",
+          "Responsive design (mobile, tablette, desktop)",
+          "Optimisation SEO de base",
+          "Hébergement première année inclus",
           "Livraison en 2 à 4 semaines"
         ]
       },
       {
         title: "Pack Professionnel",
-        price: "à partir de 1 500 €",
+        price: "à partir de 2 000 €",
         features: [
           "Site 4 à 8 pages",
-          "Intégration blog ou formulaire de contact",
-          "Optimisation SEO avancée",
-          "Maintenance offerte 1 mois après livraison"
+          "Design premium personnalisé",
+          "Blog ou actualités intégré",
+          "Formulaires avancés",
+          "Optimisation SEO complète",
+          "Hébergement première année inclus",
+          "Maintenance 3 mois offerte"
         ]
       },
       {
         title: "Pack sur mesure",
         price: "devis personnalisé",
         features: [
+          "Nombre de pages illimité",
           "Fonctionnalités spécifiques",
-          "Réservation",
-          "Espace client",
-          "Solutions adaptées à vos besoins"
+          "Système de réservation",
+          "Espace client/membre",
+          "Intégrations sur mesure",
+          "Solutions personnalisées"
         ]
       }
     ],
     ecommerce: [
       {
-        title: "Pack de base",
-        price: "à partir de 1 800 €",
+        title: "Pack E-commerce Essentiel",
+        price: "à partir de 3 000 €",
         features: [
-          "Catalogue jusqu'à 20 produits",
-          "Paiement en ligne sécurisé",
-          "Optimisation mobile"
+          "Jusqu'à 50 produits",
+          "Design e-commerce optimisé",
+          "Paiement sécurisé (Stripe/PayPal)",
+          "Gestion des stocks simple",
+          "Responsive design",
+          "Formation à l'utilisation incluse",
+          "Hébergement sécurisé 1ère année"
         ]
       },
       {
-        title: "Pack avancé",
-        price: "à partir de 2 500 €",
+        title: "Pack E-commerce Avancé",
+        price: "à partir de 4 500 €",
         features: [
-          "Gestion des stocks et promotions",
-          "SEO pour produits",
-          "Intégration d'outils marketing"
+          "Catalogue produits illimité",
+          "Gestion avancée des stocks",
+          "Multi-devises et taxes",
+          "Système de promotions",
+          "SEO e-commerce optimisé",
+          "Intégration outils marketing",
+          "Analytics et rapports détaillés",
+          "Formation complète incluse"
         ]
       }
     ],
     maintenance: [
       {
         title: "Maintenance ponctuelle",
-        price: "à partir de 70 €",
+        price: "90 €",
         timeframe: "par heure",
         features: [
           "Corrections de bugs",
-          "Mises à jour"
+          "Mises à jour de sécurité",
+          "Modifications mineures",
+          "Support par email",
+          "Temps de réponse sous 48h"
         ]
       },
       {
-        title: "Forfait mensuel",
-        price: "à partir de 150 €",
+        title: "Forfait maintenance mensuel",
+        price: "à partir de 180 €",
         timeframe: "par mois",
         features: [
+          "2h de modifications incluses",
           "Mises à jour régulières",
-          "Sauvegardes",
-          "Suivi de performance"
+          "Sauvegardes hebdomadaires",
+          "Surveillance sécurité 24/7",
+          "Support prioritaire",
+          "Rapport mensuel de performance"
+        ]
+      },
+      {
+        title: "Forfait maintenance annuel",
+        price: "1 800 €",
+        timeframe: "par an",
+        features: [
+          "24h de modifications incluses",
+          "Mises à jour illimitées",
+          "Sauvegardes quotidiennes",
+          "Surveillance sécurité 24/7",
+          "Support prioritaire",
+          "Hébergement premium inclus",
+          "Rapports trimestriels"
         ]
       }
     ],
     applications: [
       {
-        title: "Projet simple",
-        price: "à partir de 2 000 €",
+        title: "Application Web Simple",
+        price: "à partir de 4 000 €",
         features: [
-          "Application avec fonctionnalités de base"
+          "Interface utilisateur intuitive",
+          "Fonctionnalités de base",
+          "Base de données simple",
+          "Authentification utilisateurs",
+          "Tests et déploiement",
+          "Documentation technique",
+          "Formation utilisateur incluse"
         ]
       },
       {
-        title: "Projet avancé",
-        price: "devis sur demande",
+        title: "Application Web Avancée",
+        price: "à partir de 8 000 €",
         features: [
-          "Analyse approfondie",
-          "Développement d'applications complexes",
-          "Solutions de gestion RH, CRM"
+          "Architecture complexe",
+          "Base de données avancée",
+          "API RESTful",
+          "Système de rôles",
+          "Intégrations tierces",
+          "Tests automatisés",
+          "Documentation complète",
+          "Support de lancement"
         ]
       }
     ],
     audit: [
       {
         title: "Audit technique ou SEO",
-        price: "150 €",
+        price: "à partir de 350 €",
         features: [
+          "Analyse technique approfondie",
+          "Audit de performance",
+          "Analyse de la sécurité",
           "Rapport détaillé",
-          "Recommandations personnalisées"
+          "Recommandations priorisées",
+          "Plan d'action correctif"
         ]
       },
       {
-        title: "Conseil personnalisé",
-        price: "80 €",
+        title: "Conseil et Accompagnement",
+        price: "100 €",
         timeframe: "par heure",
         features: [
-          "Réunion ou atelier",
-          "Définition de votre projet"
+          "Réunions stratégiques",
+          "Définition des besoins",
+          "Recommandations techniques",
+          "Accompagnement projet",
+          "Support décisionnel"
         ]
       }
     ],
     options: [
       {
-        title: "Rédaction de contenu",
-        price: "à partir de 50 €",
+        title: "Rédaction Web SEO",
+        price: "à partir de 60 €",
         timeframe: "par page",
         features: [
-          "Contenu optimisé SEO",
-          "Ton adapté à votre marque"
+          "Recherche de mots-clés",
+          "Rédaction optimisée SEO",
+          "Balises meta incluses",
+          "Ton adapté à votre marque",
+          "2 révisions incluses"
         ]
       },
       {
         title: "Formation",
-        price: "200 €",
+        price: "250 €",
         timeframe: "2 heures",
         features: [
-          "Formation à la gestion de votre site",
-          "Support de formation fourni"
+          "Formation personnalisée",
+          "Gestion du back-office",
+          "Bonnes pratiques SEO",
+          "Support de formation fourni",
+          "Suivi post-formation (2 semaines)"
+        ]
+      },
+      {
+        title: "Hébergement Premium",
+        price: "30 €",
+        timeframe: "par mois",
+        features: [
+          "Hébergement haute performance",
+          "Certificat SSL inclus",
+          "Sauvegardes quotidiennes",
+          "Protection DDoS",
+          "Support technique 24/7"
         ]
       }
     ]

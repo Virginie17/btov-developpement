@@ -3,16 +3,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Code, Globe, LineChart, Paintbrush, MessageSquare } from 'lucide-react'
+import { Code, Globe, LineChart, Paintbrush } from 'lucide-react'
 import PromoBanner from '@/components/PromoBanner'
 import PromoSection from '@/components/PromoSection'
+import FAQ from '@/components/FAQ'
 
 const services = [
-  {
-    icon: <MessageSquare className="w-8 h-8" />,
-    title: 'Prompt Engineering',
-    description: 'Optimisation des interactions avec l\'IA pour des résultats performants.'
-  },
   {
     icon: <Code className="w-8 h-8" />,
     title: 'Création de sites web',
@@ -46,8 +42,9 @@ export default function Home() {
   src="/images/tour2.webp"
   alt="Vue panoramique des tours de La Rochelle au coucher du soleil"
   fill
-  sizes="100vw"
-  quality={80}
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+  quality={85}
+  priority
   placeholder="blur"
   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
   className="object-cover brightness-[0.7]"
@@ -106,6 +103,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <FAQ />
 
       {/* About Section Responsive */}
       <section className="bg-secondary-50 dark:bg-gray-800 py-12 sm:py-20">

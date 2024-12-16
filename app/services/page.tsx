@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import { Code, Globe, LineChart, Paintbrush } from 'lucide-react';
 
 export default function Services() {
   return (
@@ -82,85 +83,57 @@ export default function Services() {
 
 const services = [
   {
-    title: "Prompt Engineering",
-    description: "Expertise en conception et optimisation de prompts pour tirer le meilleur parti des modèles d'IA.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-      </svg>
-    ),
-    features: [
-      "Optimisation de prompts",
-      "Formation personnalisée",
-      "Consultation stratégique",
-      "Intégration d'IA dans le workflow",
-      "Veille technologique",
-    ],
-  },
-  {
     title: "Création de Sites Web",
-    description: "Développement de sites web modernes et performants, adaptés à vos besoins spécifiques.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
+    description: "Développement de sites web professionnels et performants adaptés à vos besoins.",
+    icon: <Code className="w-12 h-12" />,
     features: [
-      "Sites vitrines professionnels",
-      "Sites e-commerce",
+      "Sites vitrines élégants et modernes",
+      "Sites e-commerce complets",
       "Applications web sur mesure",
-      "Design responsive",
-      "Optimisation des performances",
-    ],
+      "Design responsive et adaptatif",
+      "Intégration de CMS (WordPress, etc.)",
+      "Solutions performantes et sécurisées"
+    ]
   },
   {
-    title: "Refonte de Site",
-    description: "Modernisation de votre site existant pour améliorer son efficacité et son apparence.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-      </svg>
-    ),
+    title: "Refonte de Sites Web",
+    description: "Modernisation et optimisation de sites existants pour une meilleure performance.",
+    icon: <Paintbrush className="w-12 h-12" />,
     features: [
       "Analyse de l'existant",
-      "Refonte graphique",
+      "Design moderne et attractif",
+      "Amélioration de l'expérience utilisateur",
+      "Optimisation des performances",
       "Migration de contenu",
-      "Amélioration UX/UI",
-      "Optimisation technique",
-    ],
+      "Mise à niveau technologique"
+    ]
   },
   {
     title: "Référencement SEO",
-    description: "Optimisation de votre visibilité sur les moteurs de recherche pour attirer plus de visiteurs.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    ),
+    description: "Optimisation pour les moteurs de recherche et amélioration de la visibilité en ligne.",
+    icon: <LineChart className="w-12 h-12" />,
     features: [
       "Audit SEO complet",
       "Optimisation on-page",
+      "Optimisation technique",
       "Stratégie de contenu",
       "Suivi des performances",
-      "Rapports mensuels",
-    ],
+      "Rapports détaillés"
+    ]
   },
   {
     title: "Optimisation Web",
     description: "Amélioration des performances et de l'expérience utilisateur de votre site.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
+    icon: <Globe className="w-12 h-12" />,
     features: [
-      "Optimisation des performances",
-      "Amélioration du temps de chargement",
-      "Sécurisation du site",
+      "Optimisation des temps de chargement",
+      "Amélioration de l'accessibilité",
+      "Tests de compatibilité",
       "Optimisation mobile",
-      "Maintenance régulière",
-    ],
-  },
+      "Sécurisation du site",
+      "Maintenance régulière"
+    ]
+  }
 ];
 
 const process = [
