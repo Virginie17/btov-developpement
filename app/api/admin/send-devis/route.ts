@@ -1,42 +1,80 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Vérifier si la clé API est présente
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  console.error('RESEND_API_KEY is not defined');
+}
+
+const resend = new Resend(resendApiKey);
 
 export async function POST(request: Request) {
   try {
-    const { clientEmail, finalPrice } = await request.json();
+    // Vérifier si la requête est valide
+    if (!request.body) {
+      return NextResponse.json(
+        { error: 'Request body is required' },
+        { status: 400 }
+      );
+    }
+
+    const data = await request.json();
+    const { clientEmail, formData, serviceTitle, basePrice, features } = data;
+
+    // Vérifier les champs requis
+    if (!clientEmail || !serviceTitle) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #2563eb;">Votre devis BTOV Développement</h1>
+        <h1 style="color: #2563eb;">Nouvelle demande de devis - ${serviceTitle}</h1>
         
-        <p>Bonjour,</p>
+        <h2>Informations du client :</h2>
+        <ul>
+          <li>Entreprise : ${formData.companyName}</li>
+          <li>Contact : ${formData.contactName}</li>
+          <li>Email : ${clientEmail}</li>
+          <li>Téléphone : ${formData.clientPhone}</li>
+          <li>Adresse : ${formData.address}</li>
+        </ul>
+
+        <h2>Détails du projet :</h2>
+        <p><strong>Service demandé :</strong> ${serviceTitle}</p>
+        <p><strong>Prix de base :</strong> ${basePrice}€</p>
         
-        <p>Nous avons le plaisir de vous faire parvenir votre devis en pièce jointe.</p>
-        
-        <p>Le montant total de la prestation s'élève à ${finalPrice}€ TTC.</p>
-        
-        <p>Pour accepter ce devis, merci de nous le retourner signé avec la mention "Bon pour accord".</p>
-        
-        <p>N'hésitez pas à nous contacter si vous avez des questions.</p>
-        
-        <p style="margin-top: 30px;">Cordialement,<br>L'équipe BTOV Développement</p>
+        <h3>Fonctionnalités incluses :</h3>
+        <ul>
+          ${features.map((feature: string) => `<li>${feature}</li>`).join('')}
+        </ul>
+
+        <h3>Description du projet :</h3>
+        <p>${formData.projectDescription}</p>
       </div>
     `;
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: [clientEmail],
-      subject: 'Votre devis BTOV Développement',
+    // Envoyer l'email
+    const email = await resend.emails.send({
+      from: 'BTOV Développement <onboarding@resend.dev>',
+      to: ['btovdeveloppement@gmail.com'],
+      reply_to: clientEmail,
+      subject: `Nouvelle demande de devis - ${serviceTitle}`,
       html: htmlContent,
     });
 
-    return NextResponse.json({ success: true });
+    if (email.error) {
+      throw new Error(email.error.message);
+    }
+
+    return NextResponse.json({ success: true, id: email.data?.id });
   } catch (error) {
     console.error('Error sending devis:', error);
     return NextResponse.json(
-      { error: 'Error sending devis' },
+      { error: 'Failed to send email' },
       { status: 500 }
     );
   }
