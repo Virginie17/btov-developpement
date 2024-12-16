@@ -1,13 +1,40 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
+// Vérification de la clé API Resend
+if (!process.env.RESEND_API_KEY) {
+  throw new Error('RESEND_API_KEY is not defined in environment variables');
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: 'Server configuration error' },
+      { status: 500 }
+    );
+  }
+
   try {
     const { formData, serviceTitle } = await request.json();
     
+    if (!formData || !serviceTitle) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
     const { companyName, contactName, address, clientEmail, clientPhone, projectDescription } = formData;
+
+    // Vérification des champs requis
+    if (!companyName || !contactName || !clientEmail || !projectDescription) {
+      return NextResponse.json(
+        { error: 'Missing required form fields' },
+        { status: 400 }
+      );
+    }
 
     // Envoyer l'email
     const { data, error } = await resend.emails.send({
@@ -26,9 +53,9 @@ export async function POST(request: Request) {
               <ul style="list-style: none; padding-left: 0;">
                 <li style="margin-bottom: 8px;"><strong>Entreprise :</strong> ${companyName}</li>
                 <li style="margin-bottom: 8px;"><strong>Contact :</strong> ${contactName}</li>
-                <li style="margin-bottom: 8px;"><strong>Adresse :</strong> ${address}</li>
+                <li style="margin-bottom: 8px;"><strong>Adresse :</strong> ${address || 'Non spécifiée'}</li>
                 <li style="margin-bottom: 8px;"><strong>Email :</strong> ${clientEmail}</li>
-                <li style="margin-bottom: 8px;"><strong>Téléphone :</strong> ${clientPhone}</li>
+                <li style="margin-bottom: 8px;"><strong>Téléphone :</strong> ${clientPhone || 'Non spécifié'}</li>
               </ul>
             </div>
 
