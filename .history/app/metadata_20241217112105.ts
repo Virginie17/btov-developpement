@@ -23,7 +23,7 @@ const defaultMetadata: Metadata = {
   ],
   authors: [{
     name: 'B to V Développement',
-    url: 'https://www.btov-dev.com',
+    url: 'https://www.btov-dev.fr',
   }],
   creator: 'B to V Développement',
   publisher: 'B to V Développement',
@@ -41,7 +41,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://www.btov-dev.com',
+    url: 'https://www.btov-dev.',
     siteName: 'B to V Développement',
     title: 'Développement Web & Prompt Engineering à La Rochelle | B to V Développement',
     description: 'Expert en développement web à La Rochelle, création de sites sur-mesure, optimisation SEO, Prompt Engineering, et intelligence artificielle. 10+ ans d\'expérience.',

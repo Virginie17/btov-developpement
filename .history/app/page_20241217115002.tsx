@@ -65,7 +65,7 @@ export default function Home() {
               "@type": "ContactPoint",
               "telephone": "+33 1 23 45 67 89",
               "contactType": "customer service",
-              "email": "btovdeveloppement@gmail.com"
+              "email": "contact@btov-dev.com"
             }
           })}
         </script>

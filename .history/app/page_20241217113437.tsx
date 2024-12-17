@@ -47,11 +47,11 @@ export default function Home() {
             "@type": "Organization",
             "name": "B to V Développement",
             "url": "https://www.btov-dev.com",
-            "logo": "https://www.btov-dev.com/logo.png",
+            "logo": "URL_de_votre_logo",
             "sameAs": [
-              "https://www.facebook.com/virginiechaffard",
-              "https://www.linkedin.com/in/virginie-chaffard-lucon-327b712a3",
-              "https://instagram.com/b_to_v"
+              "https://www.facebook.com/votrepage",
+              "https://www.linkedin.com/in/votreprofil",
+              "https://twitter.com/votreprofil"
             ],
             "address": {
               "@type": "PostalAddress",
@@ -65,7 +65,7 @@ export default function Home() {
               "@type": "ContactPoint",
               "telephone": "+33 1 23 45 67 89",
               "contactType": "customer service",
-              "email": "btovdeveloppement@gmail.com"
+              "email": "contact@btov-dev.com"
             }
           })}
         </script>

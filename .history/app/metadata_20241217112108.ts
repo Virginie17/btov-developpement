@@ -23,7 +23,7 @@ const defaultMetadata: Metadata = {
   ],
   authors: [{
     name: 'B to V Développement',
-    url: 'https://www.btov-dev.com',
+    url: 'https://www.btov-dev.fr',
   }],
   creator: 'B to V Développement',
   publisher: 'B to V Développement',
