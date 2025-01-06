@@ -9,6 +9,18 @@ const __dirname = dirname(__filename);
 const nextConfig = {
   images: {
     domains: ['www.btov-dev.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media2.dev.to',
+        pathname: '/dynamic/image/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dev-to-uploads.s3.amazonaws.com',
+        pathname: '/uploads/**',
+      }
+    ],
     unoptimized: true
   },
   experimental: {

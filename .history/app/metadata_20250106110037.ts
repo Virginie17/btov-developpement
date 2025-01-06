@@ -63,7 +63,14 @@ const defaultMetadata: Metadata = {
       },
     ],
   },
-  
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Développement Web & Prompt Engineering | B to V Développement',
+    description: 'Développeur web freelance à La Rochelle, spécialisé dans la création de sites, l\'optimisation SEO et le Prompt Engineering. Devis gratuit !',
+    images: ['/og-image.jpg'],
+    creator: '@btovdev',
+    site: '@btovdev',
+  },
   alternates: {
     canonical: 'https://www.btov-dev.com',
     languages: {
@@ -75,7 +82,11 @@ const defaultMetadata: Metadata = {
     initialScale: 1,
     maximumScale: 5,
   },
-  
+  verification: {
+    google: 'votre-code-verification-google',
+    yandex: 'votre-code-verification-yandex',
+    bing: 'votre-code-verification-bing',
+  } as Record<string, string>,
   category: 'technology',
   classification: 'Développement Web, SEO',
   other: {

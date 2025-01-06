@@ -58,7 +58,9 @@ export default function Navigation() {
             <Link href="/tarifs" className="px-3 py-2 text-sm text-gray-700 hover:text-primary-500 transition-colors">
               Tarifs
             </Link>
-            
+            <Link href="/blog" className="px-3 py-2 text-sm text-gray-700 hover:text-primary-500 transition-colors">
+              Blog
+            </Link>
             <Link href="/cahier-des-charges" className="px-3 py-2 text-sm text-gray-700 hover:text-primary-500 transition-colors">
               Cahier des charges
             </Link>

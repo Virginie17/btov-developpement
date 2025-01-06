@@ -21,13 +21,6 @@ const defaultMetadata: Metadata = {
     'developpeur web france',
     'création de site web personnalisé france',
     'optimisation SEO france',
-    'création site e-commerce france',
-    'référencement naturel france',
-    'consultant SEO france',
-    'développement web sur mesure france',
-    'site internet professionnel france',
-    'création site internet pour PME france',
-    'services développement web france',
   ],
   authors: [{
     name: 'B to V Développement',
@@ -51,19 +44,26 @@ const defaultMetadata: Metadata = {
     locale: 'fr_FR',
     url: 'https://www.btov-dev.com',
     siteName: 'B to V Développement',
-    title: 'Développement Web  à La Rochelle | B to V Développement',
+    title: 'Développement Web & Prompt Engineering à La Rochelle | B to V Développement',
     description: 'Expert en développement web à La Rochelle, création de sites sur-mesure, optimisation SEO, Prompt Engineering, et intelligence artificielle. 10+ ans d\'expérience.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'B to V Développement - Développeur Web  à La Rochelle',
+        alt: 'B to V Développement - Développeur Web et Prompt Engineering à La Rochelle',
         type: 'image/jpeg',
       },
     ],
   },
-  
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Développement Web & Prompt Engineering | B to V Développement',
+    description: 'Développeur web freelance à La Rochelle, spécialisé dans la création de sites, l\'optimisation SEO et le Prompt Engineering. Devis gratuit !',
+    images: ['/og-image.jpg'],
+    creator: '@btovdev',
+    site: '@btovdev',
+  },
   alternates: {
     canonical: 'https://www.btov-dev.com',
     languages: {
@@ -75,9 +75,13 @@ const defaultMetadata: Metadata = {
     initialScale: 1,
     maximumScale: 5,
   },
-  
+  verification: {
+    google: 'votre-code-verification-google',
+    yandex: 'votre-code-verification-yandex',
+    bing: 'votre-code-verification-bing',
+  } as Record<string, string>,
   category: 'technology',
-  classification: 'Développement Web, SEO',
+  classification: 'Développement Web, Prompt Engineering, Intelligence Artificielle, SEO',
   other: {
     'geo.region': 'FR-17',
     'geo.placename': 'La Rochelle',

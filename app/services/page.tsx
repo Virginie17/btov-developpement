@@ -83,6 +83,19 @@ export default function Services() {
 
 const services = [
   {
+    title: "Hébergement & Nom de Domaine",
+    description: "Tout ce que vous devez savoir sur l'hébergement web et les noms de domaine.",
+    icon: <Globe className="w-12 h-12" />,
+    features: [
+      "Hébergement web sécurisé et performant (10-15€/mois)",
+      "Nom de domaine personnalisé (.fr, .com) (10-15€/an)",
+      "Certificat SSL pour la sécurité",
+      "Support technique 24/7",
+      "Sauvegarde automatique des données",
+      "Configuration et maintenance incluses"
+    ]
+  },
+  {
     title: "Création de Sites Web",
     description: "Développement de sites web professionnels et performants adaptés à vos besoins.",
     icon: <Code className="w-12 h-12" />,

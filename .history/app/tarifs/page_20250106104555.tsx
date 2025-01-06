@@ -72,7 +72,7 @@ export default function TarifsPage() {
       },
       {
         title: "Pack Professionnel - Site Vitrine",
-        price: "à partir de 2 300 €",
+        price: "à partir de 2 000 €",
         features: [
           "Site de 4 à 8 pages personnalisées",
           "Design premium avec animations modernes",
@@ -129,7 +129,7 @@ export default function TarifsPage() {
       },
       {
         title: "Pack E-commerce Avancé",
-        price: "à partir de 5 000 €",
+        price: "à partir de 4 500 €",
         features: [
           "Catalogue produits illimité",
           "Design premium personnalisé",

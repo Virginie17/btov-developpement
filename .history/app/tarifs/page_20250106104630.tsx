@@ -129,7 +129,7 @@ export default function TarifsPage() {
       },
       {
         title: "Pack E-commerce Avancé",
-        price: "à partir de 5 000 €",
+        price: "à partir de 4 000 €",
         features: [
           "Catalogue produits illimité",
           "Design premium personnalisé",
