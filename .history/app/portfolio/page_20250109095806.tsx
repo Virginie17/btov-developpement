@@ -203,22 +203,46 @@ export default function Portfolio() {
       </motion.div>
 
       <div className="relative mb-8">
-        <div className="flex overflow-x-auto sm:justify-center gap-3 px-4 -mx-4 sm:mx-0 pb-4 sm:pb-0 no-scrollbar">
-          <div className="flex gap-3 sm:flex-wrap">
+        {/* Version mobile : select */}
+        <div className="sm:hidden w-full px-4">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 
+            border-2 border-zinc-200 dark:border-zinc-700
+            shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:ring-opacity-50 
+            transition-all duration-200 appearance-none
+            bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234F46E5%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+            bg-[length:24px] bg-[right_16px_center] bg-no-repeat
+            font-medium text-base"
+          >
             {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`flex-none px-4 py-2 rounded-full transition-colors text-sm whitespace-nowrap ${
-                  selectedCategory === category.id
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
-                }`}
+              <option 
+                key={category.id} 
+                value={category.id}
+                className="py-2 bg-zinc-100 dark:bg-zinc-800"
               >
                 {category.name}
-              </button>
+              </option>
             ))}
-          </div>
+          </select>
+        </div>
+
+        {/* Version desktop : boutons */}
+        <div className="hidden sm:flex justify-center gap-4 px-4">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`px-5 py-2.5 rounded-full transition-all text-base font-medium shadow-sm whitespace-nowrap ${
+                selectedCategory === category.id
+                  ? 'bg-primary-500 text-white scale-105 transform'
+                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+              }`}
+            >
+              {category.name}
+            </button>
+          ))}
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,6 +15,26 @@ const Footer = () => {
               <p>La Rochelle, France</p>
               <p>btovdeveloppement@gmail.com</p>
               <p>SIRET : 93330480000016</p>
+              <div className="flex space-x-4 mt-2">
+                <a 
+                  href="https://www.instagram.com/b_to_v" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 hover:text-primary-300 transition-colors"
+                >
+                  <FaInstagram className="text-2xl" />
+                  <span>Instagram</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/virginie-chaffard-lucon-327b712a3" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 hover:text-primary-300 transition-colors"
+                >
+                  <FaLinkedin className="text-2xl" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
             </div>
           </div>
 
