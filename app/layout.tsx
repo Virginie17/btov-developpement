@@ -4,11 +4,14 @@ import './globals.css'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import CookieBanner from '../components/CookieBanner'
+import { homeMetadata } from './metadata'
 
 const outfit = Outfit({ 
   subsets: ['latin'],
   display: 'swap',
 })
+
+export const metadata: Metadata = homeMetadata;
 
 export default function RootLayout({
   children,

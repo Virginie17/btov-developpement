@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 const defaultMetadata: Metadata = {
   metadataBase: new URL('https://www.btov-dev.com'),
   title: {
-    default: 'Développeur Web freelance à La Rochelle | B to V Développement La Rochelle',
+    default: 'Expert en Développement Web à La Rochelle | B to V Développement La Rochelle',
     template: '%s | B to V Développement',
   },
   description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering. 10+ ans d\'expérience pour booster votre présence en ligne. Contactez-nous pour un devis personnalisé.',
@@ -41,7 +41,7 @@ const defaultMetadata: Metadata = {
     locale: 'fr_FR',
     url: 'https://www.btov-dev.com',
     siteName: 'B to V Développement',
-    title: 'Développeur Web freelance à La Rochelle | B to V Développement',
+    title: 'Expert en Développement Web à La Rochelle | B to V Développement',
     description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
     images: [
       {
@@ -57,10 +57,10 @@ const defaultMetadata: Metadata = {
 export const homeMetadata: Metadata = {
   ...defaultMetadata,
   title: 'Développeur Web freelance à La Rochelle | B to V Développement',
-  description: 'Besoin d\'un développeur web freelance à La Rochelle ? B to V Développement réalise des sites modernes, performants et adaptés à vos besoins.',
+  description: 'besoin d unDéveloppeur web freelance à La Rochelle? B to V Développement est réalise des sites modernes,performants et adaptés a vos besoins.',
   openGraph: {
     ...defaultMetadata.openGraph,
-    title: 'Développeur Web freelance à La Rochelle | B to V Développement',
+    title: 'Développeur Web à La Rochelle | B to V Développement',
     description: 'Développeur web freelance à La Rochelle, expert en création de sites web sur-mesure et optimisation SEO.',
   },
 };
@@ -76,25 +76,27 @@ export const servicesMetadata: Metadata = {
   },
 };
 
+
+
 export const contactMetadata: Metadata = {
   ...defaultMetadata,
-  title: 'Contactez un développeur Web freelance à La Rochelle | B to V Développement',
-  description: 'Contactez B to V Développement, développeur web freelance à La Rochelle. Discutons de votre projet de site web dès aujourd\'hui !',
+  title: 'Contactez un developpeur Web freelance à La Rochelle | B to V Développement',
+  description: ' Contactez B to V Développement, developpeur web freelance à La Rochelle,discutons  pour un devis gratuit. Expert en création de sites web et SEO.',
   openGraph: {
     ...defaultMetadata.openGraph,
-    title: 'Contactez un développeur Web freelance à La Rochelle | B to V Développement',
-    description: 'Contactez votre développeur web freelance à La Rochelle pour un devis personnalisé.',
+    title: 'Contactez Votre Expert Web à La Rochelle | B to V Développement',
+    description: 'Contactez votre expert en développement web à La Rochelle pour un devis gratuit.',
   },
 };
 
 export const aboutMetadata: Metadata = {
   ...defaultMetadata,
-  title: 'À Propos de B to V Développement | Développeur Web freelance La Rochelle',
-  description: 'En savoir plus sur B to V Développement, votre développeur web freelance à La Rochelle. Expertise en création de sites web modernes et performants.',
+  title: 'À Propos de B to V Développement | Expert Web La Rochelle',
+  description: 'Découvrez B to V Développement, votre expert en développement web à La Rochelle. Plus de 10 ans d\'expérience au service de votre présence digitale.',
   openGraph: {
     ...defaultMetadata.openGraph,
-    title: 'À Propos de B to V Développement | Développeur Web freelance La Rochelle',
-    description: 'Découvrez B to V Développement, votre développeur web freelance à La Rochelle.',
+    title: 'À Propos de B to V Développement | Expert Web La Rochelle',
+    description: 'Découvrez B to V Développement, votre expert en développement web à La Rochelle.',
   },
 };
 
