@@ -1,9 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Code, Globe, LineChart, Paintbrush } from 'lucide-react';
-import { servicesMetadata } from '../metadata';
-
-export const metadata = servicesMetadata;
 
 export default function Services() {
   return (

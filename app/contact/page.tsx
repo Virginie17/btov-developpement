@@ -2,9 +2,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, User, MessageSquare, Send } from 'lucide-react';
-import { contactMetadata } from '../metadata';
-
-export const metadata = contactMetadata;
 
 export default function Contact() {
   const [formData, setFormData] = useState({

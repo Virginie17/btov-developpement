@@ -1,9 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { aboutMetadata } from '../metadata';
-
-export const metadata = aboutMetadata;
 
 export default function About() {
   return (
