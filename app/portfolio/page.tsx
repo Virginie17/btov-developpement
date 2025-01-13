@@ -1,8 +1,10 @@
 'use client';
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
+import PageJsonLd from '@/components/PageJsonLd';
+import { portfolioJsonLd } from '../metadata';
 
 const projects = [
   {
@@ -188,7 +190,9 @@ export default function Portfolio() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:py-16">
+    <>
+      <PageJsonLd data={portfolioJsonLd} />
+      <div className="container mx-auto px-4 py-8 sm:py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -258,5 +262,6 @@ export default function Portfolio() {
         ))}
       </div>
     </div>
+    </>
   );
 }

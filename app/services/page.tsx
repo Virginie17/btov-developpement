@@ -1,83 +1,89 @@
 'use client';
+
 import { motion } from 'framer-motion';
 import { Code, Globe, LineChart, Paintbrush } from 'lucide-react';
+import PageJsonLd from '@/components/PageJsonLd';
+import { servicesJsonLd } from '../metadata';
 
 export default function Services() {
   return (
-    <div className="min-h-screen py-20">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-primary-50 py-20"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Mes Services
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Des solutions web sur mesure pour votre succès digital
-            </p>
+    <>
+      <PageJsonLd data={servicesJsonLd} />
+      <div className="min-h-screen py-20">
+        {/* Hero Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-primary-50 py-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Mes Services
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Des solutions web sur mesure pour votre succès digital
+              </p>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* Services Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <div className="text-primary-600 mb-6">
-                {service.icon}
-              </div>
-              <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
-              <p className="text-gray-600 mb-6">{service.description}</p>
-              <ul className="space-y-3">
-                {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-gray-600">
-                    <svg className="h-5 w-5 text-primary-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Process Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-        className="bg-secondary-50 py-20 mt-16"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Mon Processus</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {process.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <span className="text-2xl font-bold text-primary-600">{index + 1}</span>
+        {/* Services Grid */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <div className="text-primary-600 mb-6">
+                  {service.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
-              </div>
+                <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
+                <p className="text-gray-600 mb-6">{service.description}</p>
+                <ul className="space-y-3">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600">
+                      <svg className="h-5 w-5 text-primary-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             ))}
           </div>
         </div>
-      </motion.section>
-    </div>
+
+        {/* Process Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="bg-secondary-50 py-20 mt-16"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-12">Mon Processus</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {process.map((step, index) => (
+                <div key={index} className="text-center">
+                  <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-2xl font-bold text-primary-600">{index + 1}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                  <p className="text-gray-600">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+      </div>
+    </>
   );
 }
 

@@ -1,9 +1,9 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
-import DevisModal from '@/components/DevisModal';
+import PageJsonLd from '@/components/PageJsonLd';
+import { tarifsJsonLd } from '../metadata';
 
 type ServiceProps = {
   title: string;
@@ -295,90 +295,93 @@ export default function TarifsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Grille tarifaire</h1>
-          <p className="text-xl text-gray-600">Des solutions adaptées à tous vos besoins</p>
-        </div>
+    <>
+      <PageJsonLd data={tarifsJsonLd} />
+      <div className="min-h-screen bg-gray-50 py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-bold mb-4">Grille tarifaire</h1>
+            <p className="text-xl text-gray-600">Des solutions adaptées à tous vos besoins</p>
+          </div>
 
-        <div className="space-y-16">
-          {/* Sites Vitrines */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">1. Création de sites vitrines</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.sitesVitrines.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+          <div className="space-y-16">
+            {/* Sites Vitrines */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">1. Création de sites vitrines</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.sitesVitrines.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* E-commerce */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">2. Création de sites e-commerce</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {services.ecommerce.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+            {/* E-commerce */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">2. Création de sites e-commerce</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.ecommerce.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* Maintenance */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">3. Maintenance et optimisation</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {services.maintenance.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+            {/* Maintenance */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">3. Maintenance et optimisation</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.maintenance.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* Applications */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">4. Applications web sur mesure</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {services.applications.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+            {/* Applications */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">4. Applications web sur mesure</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.applications.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* Audit */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">5. Audit et conseils</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {services.audit.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+            {/* Audit */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">5. Audit et conseils</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.audit.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* Options */}
-          <section>
-            <h2 className="text-2xl font-bold mb-8">💡 Options supplémentaires</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {services.options.map((service, index) => (
-                <ServiceCard key={index} {...service} />
-              ))}
-            </div>
-          </section>
+            {/* Options */}
+            <section>
+              <h2 className="text-2xl font-bold mb-8">💡 Options supplémentaires</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.options.map((service, index) => (
+                  <ServiceCard key={index} {...service} />
+                ))}
+              </div>
+            </section>
 
-          {/* CTA */}
-          <section className="bg-white rounded-lg shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">📩 Besoin d'un devis ?</h2>
-            <p className="text-lg text-gray-600 mb-6">
-              Chaque projet étant unique, contactez-moi pour discuter de vos besoins.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg 
+            {/* CTA */}
+            <section className="bg-white rounded-lg shadow-lg p-8 text-center">
+              <h2 className="text-2xl font-bold mb-4">📩 Besoin d'un devis ?</h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Chaque projet étant unique, contactez-moi pour discuter de vos besoins.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg 
               hover:bg-blue-700 transition-colors duration-200 font-semibold"
-            >
-              Demander un devis
-            </Link>
-          </section>
+              >
+                Demander un devis
+              </Link>
+            </section>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

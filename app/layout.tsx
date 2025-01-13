@@ -4,7 +4,8 @@ import './globals.css'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import CookieBanner from '../components/CookieBanner'
-import { homeMetadata } from './metadata'
+import { homeMetadata, jsonLd } from './metadata'
+import JsonLd from './components/JsonLd'
 
 const outfit = Outfit({ 
   subsets: ['latin'],
@@ -20,6 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        <JsonLd jsonLd={jsonLd} />
+      </head>
       <body className={`${outfit.className} min-h-screen antialiased`}>
         <div className="relative">
           <Navigation />
