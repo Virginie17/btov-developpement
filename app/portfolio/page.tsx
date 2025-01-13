@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import PageJsonLd from '@/components/PageJsonLd';
 import { portfolioJsonLd } from '../metadata';
 
