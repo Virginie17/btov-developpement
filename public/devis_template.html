@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis - B to V développement</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            color: var(--text-color);
+            background-color: #f3f4f6;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 21cm;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .company-info {
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .devis-info {
+            text-align: right;
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .devis-number {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .client-info {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .total-section {
+            margin-top: 2rem;
+            text-align: right;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 2rem;
+            margin: 0.5rem 0;
+        }
+
+        .total-amount {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .conditions {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .signatures {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 6px;
+            min-height: 150px;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .controls button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .controls button:hover {
+            background: var(--secondary-color);
+        }
+
+        [contenteditable="true"] {
+            border: 1px solid transparent;
+            padding: 2px;
+            min-height: 1em;
+        }
+
+        [contenteditable="true"]:hover {
+            border-color: #e5e7eb;
+            background: #f8fafc;
+        }
+
+        [contenteditable="true"]:focus {
+            border-color: var(--primary-color);
+            background: white;
+            outline: none;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .controls {
+                display: none;
+            }
+            [contenteditable="true"] {
+                border: none !important;
+                background: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button onclick="makeEditable(true)">Modifier</button>
+        <button onclick="makeEditable(false)">Verrouiller</button>
+        <button onclick="generatePDF()">Générer le PDF</button>
+        <button onclick="openEmail()">Préparer l'email</button>
+    </div>
+
+    <div class="container" id="devis">
+        <div class="header">
+            <img src="/images/logo.webp" alt="B to V développement" class="logo">
+            <div class="company-info">
+                <h1>B to V développement</h1>
+                <p contenteditable="true">52 rue jean chevolleau<br>
+                17140, Lagord<br>
+                Email : btovdeveloppement@gmail.com</p>
+                <p>SIRET : 93330480000016<br>
+                Micro-entrepreneur<br>
+                Dispensé d'immatriculation au RCS et au RM</p>
+            </div>
+            <div class="devis-info">
+                <p class="devis-number" contenteditable="true">DEVIS N° DEV-2025-001</p>
+                <p>Date d'émission : <span contenteditable="true">20/01/2025</span><br>
+                Validité : <span contenteditable="true">30 jours</span><br>
+                Devis gratuit</p>
+            </div>
+        </div>
+
+        <div class="client-info">
+            <h3>CLIENT</h3>
+            <p contenteditable="true">[Nom/Raison sociale du client]<br>
+            [Adresse du client]<br>
+            [Code postal, Ville]<br>
+            [Email/Téléphone]</p>
+        </div>
+
+        <table id="prestations">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire HT</th>
+                    <th>Total HT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true">[Description détaillée de la prestation]</td>
+                    <td contenteditable="true">1</td>
+                    <td contenteditable="true">0,00 €</td>
+                    <td contenteditable="true">0,00 €</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button onclick="addRow()" class="add-row" style="margin: 10px 0;">+ Ajouter une ligne</button>
+
+        <div class="total-section">
+            <div class="total-line">
+                <span>Total HT</span>
+                <span class="total-amount" contenteditable="true">0,00 €</span>
+            </div>
+            <div class="total-line">
+                <span>TVA non applicable, art. 293 B du CGI</span>
+                <span>0,00 €</span>
+            </div>
+            <div class="total-line">
+                <strong>Total TTC</strong>
+                <span class="total-amount" contenteditable="true">0,00 €</span>
+            </div>
+        </div>
+
+        <div class="conditions">
+            <h3>Conditions de réalisation et de règlement</h3>
+            <p><strong>Délai d'exécution :</strong> <span contenteditable="true">[Durée]</span> à compter de la signature du devis</p>
+            <p><strong>Modalités de paiement :</strong> Virement bancaire<br>
+            IBAN : <span contenteditable="true">[À compléter]</span></p>
+            <p><strong>Conditions de règlement :</strong> 30% à la commande, solde à la livraison</p>
+            <p><strong>Pénalités de retard :</strong> Taux annuel de 10,40% (3 fois le taux d'intérêt légal)<br>
+            Indemnité forfaitaire pour frais de recouvrement en cas de retard : 40 €<br>
+            Escompte en cas de paiement anticipé : Néant</p>
+            <p><strong>Médiation :</strong> En cas de litige, vous pouvez faire appel au médiateur de la consommation : 
+            Médiateur du Conseil National des Professions de l'Informatique (CNPI)<br>
+            En ligne : www.mediateur-cnpi.fr</p>
+            <p>La signature de ce devis implique l'acceptation totale des conditions générales de vente disponibles sur demande.</p>
+        </div>
+
+        <div class="signatures">
+            <div class="signature-box">
+                <p><strong>Pour le client</strong><br>
+                Date : ___/___/______<br>
+                Nom et signature<br>
+                précédés de la mention "Bon pour accord"</p>
+            </div>
+            <div class="signature-box">
+                <p><strong>Pour B to V développement</strong><br>
+                Date : ___/___/______<br>
+                Signature</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>B to V développement - Micro-entrepreneur<br>
+            SIRET : 93330480000016 - TVA non applicable, art. 293 B du CGI<br>
+            Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)<br>
+            Code APE : 6201Z - Programmation informatique</p>
+        </div>
+    </div>
+
+    <script>
+        function makeEditable(editable) {
+            document.querySelectorAll('[contenteditable]').forEach(el => {
+                el.contentEditable = editable;
+            });
+        }
+
+        function addRow() {
+            const tbody = document.querySelector('#prestations tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">0,00 €</td>
+                <td contenteditable="true">0,00 €</td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        async function generatePDF() {
+            const devisNumber = document.querySelector('.devis-number').textContent;
+            
+            // Cacher les contrôles pour le PDF
+            const controls = document.querySelector('.controls');
+            const addRowBtn = document.querySelector('.add-row');
+            controls.style.display = 'none';
+            addRowBtn.style.display = 'none';
+
+            // Configuration pour html2pdf
+            const opt = {
+                margin: 10,
+                filename: `devis-btov-${devisNumber.replace(/[^0-9]/g, '')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            try {
+                // Générer et sauvegarder le PDF
+                await html2pdf().set(opt).from(document.getElementById('devis')).save();
+                alert('Le PDF a été généré et téléchargé. Vous pouvez maintenant cliquer sur "Préparer l\'email" pour composer votre message avec le PDF en pièce jointe.');
+            } catch (error) {
+                console.error('Erreur lors de la génération du PDF:', error);
+                alert('Une erreur est survenue lors de la génération du PDF. Veuillez réessayer.');
+            } finally {
+                // Réafficher les contrôles
+                controls.style.display = 'block';
+                addRowBtn.style.display = 'block';
+            }
+        }
+
+        function openEmail() {
+            const devisNumber = document.querySelector('.devis-number').textContent;
+            const clientName = document.querySelector('.client-info p').textContent.split('\n')[0].replace('[', '').replace(']', '');
+            
+            // Préparer le sujet et le corps du mail
+            const subject = encodeURIComponent(`Devis ${devisNumber} - B to V développement - Développement Web`);
+            const body = encodeURIComponent(
+`Bonjour ${clientName},
+
+Je vous prie de trouver ci-joint notre proposition commerciale référencée ${devisNumber}.
+
+Ce devis détaille l'ensemble des prestations que nous avons évoquées lors de notre échange. Il inclut le développement web de votre projet ainsi que les différentes fonctionnalités demandées.
+
+Le devis est valable 30 jours à compter de sa date d'émission.
+
+Pour valider cette proposition, il vous suffit de :
+1. Vérifier l'ensemble des informations du devis
+2. Le retourner signé avec la mention "Bon pour accord"
+3. Procéder au versement de l'acompte de 30%
+
+Je reste à votre disposition pour tout complément d'information ou modification éventuelle.
+
+Cordialement,
+
+Virginie CHAFFARD
+B to V développement
+52 rue jean chevolleau
+17140, Lagord
+btovdeveloppement@gmail.com
+www.btov-dev.com`);
+            
+            // Ouvrir le client mail
+            window.location.href = `mailto:btovdeveloppement@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        // Désactiver l'édition par défaut
+        makeEditable(false);
+    </script>
+</body>
+</html>

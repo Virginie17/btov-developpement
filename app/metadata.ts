@@ -1,11 +1,44 @@
 import { Metadata } from 'next';
 
-// Données structurées communes
+const baseUrl = 'https://btov-developpement.fr';
+
+export const siteMetadata = {
+  name: 'BTOV Développement',
+  description: 'Développement web professionnel à La Rochelle - Création de sites web, applications et e-commerce sur mesure. Expert en développement web et mobile.',
+  keywords: [
+    'développeur web La Rochelle',
+    'création site web La Rochelle',
+    'développement web sur mesure',
+    'création site e-commerce',
+    'développeur freelance La Rochelle',
+    'agence web La Rochelle',
+    'création application web',
+    'site vitrine professionnel',
+    'développement application mobile',
+    'expert Next.js React',
+    'SEO La Rochelle',
+    'maintenance site web',
+    'audit site web',
+    'refonte site internet'
+  ],
+  authors: [{ name: 'Virginie Chaffard' }],
+  creator: 'Virginie Chaffard',
+  publisher: 'BTOV Développement',
+  metadataBase: new URL(baseUrl)
+};
+
 export const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'B to V Développement',
-  url: 'https://www.btov-dev.com',
+  '@id': baseUrl,
+  name: siteMetadata.name,
+  description: siteMetadata.description,
+  url: baseUrl,
+  logo: `${baseUrl}/android-chrome-512x512.png`,
+  image: [
+    `${baseUrl}/images/photo.webp`,
+    `${baseUrl}/android-chrome-512x512.png`
+  ],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'La Rochelle',
@@ -17,174 +50,183 @@ export const jsonLd = {
     latitude: '46.160329',
     longitude: '-1.151139'
   },
+  areaServed: {
+    '@type': 'GeoCircle',
+    geoMidpoint: {
+      '@type': 'GeoCoordinates',
+      latitude: '46.160329',
+      longitude: '-1.151139'
+    },
+    geoRadius: '100000'
+  },
   priceRange: '€€',
-  telephone: '+33600000000',
-  email: 'contact@btov-dev.com',
-  image: 'https://www.btov-dev.com/images/og-image.jpg',
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday'
+    ],
+    opens: '09:00',
+    closes: '18:00'
+  },
   sameAs: [
-    'https://www.linkedin.com/company/btov-developpement',
-    'https://github.com/btov-dev'
-  ]
-};
-
-// Page d'accueil
-export const homeJsonLd = {
-  ...jsonLd,
-  description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
-  '@type': 'WebSite',
-  potentialAction: {
-    '@type': 'SearchAction',
-    'target': 'https://www.btov-dev.com/search?q={search_term_string}',
-    'query-input': 'required name=search_term_string'
-  }
-};
-
-// Page Services
-export const servicesJsonLd = {
-  ...jsonLd,
-  '@type': 'Service',
+    'https://www.linkedin.com/in/virginieduboscq/',
+    'https://github.com/Virginie17'
+  ],
+  offers: {
+    '@type': 'AggregateOffer',
+    offerCount: '6',
+    lowPrice: '1800',
+    highPrice: '11000',
+    priceCurrency: 'EUR',
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Site Vitrine',
+        description: 'Création de site vitrine professionnel sur mesure',
+        price: '1800',
+        priceCurrency: 'EUR'
+      },
+      {
+        '@type': 'Offer',
+        name: 'E-commerce',
+        description: 'Développement de boutique en ligne personnalisée',
+        price: '3800',
+        priceCurrency: 'EUR'
+      },
+      {
+        '@type': 'Offer',
+        name: 'Application Web',
+        description: 'Création d\'application web sur mesure',
+        price: '5500',
+        priceCurrency: 'EUR'
+      }
+    ]
+  },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Services de développement web',
     itemListElement: [
       {
-        '@type': 'Offer',
-        name: 'Création de sites web',
-        description: 'Sites vitrines, e-commerce et applications web sur mesure'
+        '@type': 'OfferCatalog',
+        name: 'Sites Web',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Site Vitrine',
+              description: 'Création de site vitrine professionnel'
+            }
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'E-commerce',
+              description: 'Développement de boutique en ligne'
+            }
+          }
+        ]
       },
       {
-        '@type': 'Offer',
-        name: 'Refonte de site',
-        description: 'Modernisation et optimisation de sites existants'
-      },
-      {
-        '@type': 'Offer',
-        name: 'SEO & Performance',
-        description: 'Optimisation du référencement et des performances'
-      },
-      {
-        '@type': 'Offer',
-        name: 'Prompt Engineering',
-        description: 'Intégration d\'IA et automatisation des processus'
+        '@type': 'OfferCatalog',
+        name: 'Applications',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Application Web',
+              description: 'Création d\'application web sur mesure'
+            }
+          }
+        ]
       }
     ]
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    reviewCount: '12'
   }
 };
 
-// Page À propos
-export const aboutJsonLd = {
-  ...jsonLd,
-  '@type': 'AboutPage',
-  mainEntity: {
-    '@type': 'Person',
-    name: 'Virginie',
-    jobTitle: 'Développeuse Web Freelance',
-    description: 'Passionnée par le développement web et l\'IA'
-  }
+export const homeJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'BTOV Développement - Création de sites web et applications sur mesure à La Rochelle',
+  description: siteMetadata.description,
+  url: baseUrl,
+  mainEntity: jsonLd
 };
 
-// Page Contact
-export const contactJsonLd = {
-  ...jsonLd,
-  '@type': 'ContactPage',
-  mainEntity: {
-    '@type': 'ContactPoint',
-    contactType: 'customer service',
-    email: 'contact@btov-dev.com',
-    telephone: '+33600000000'
-  }
-};
-
-// Page Tarifs
-export const tarifsJsonLd = {
-  ...jsonLd,
-  '@type': 'PriceSpecification',
-  priceCurrency: 'EUR',
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'Site Vitrine',
-      price: '1500',
-      priceCurrency: 'EUR'
-    },
-    {
-      '@type': 'Offer',
-      name: 'Site E-commerce',
-      price: '3000',
-      priceCurrency: 'EUR'
-    },
-    {
-      '@type': 'Offer',
-      name: 'Application Web',
-      price: '5000',
-      priceCurrency: 'EUR'
-    }
-  ]
-};
-
-// Page Portfolio
-export const portfolioJsonLd = {
-  ...jsonLd,
-  '@type': 'CollectionPage',
+export const servicesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Services de développement web - BTOV Développement La Rochelle',
+  description: 'Découvrez nos services de création de sites web, e-commerce et applications. Solutions sur mesure pour votre entreprise à La Rochelle.',
+  url: `${baseUrl}/services`,
   mainEntity: {
     '@type': 'ItemList',
     itemListElement: [
       {
-        '@type': 'WebSite',
-        name: 'Projet 1',
-        description: 'Description du projet 1'
+        '@type': 'ListItem',
+        position: 1,
+        item: {
+          '@type': 'Service',
+          name: 'Création de Site Vitrine',
+          description: 'Sites web professionnels et responsive, optimisés pour le référencement naturel.',
+          provider: jsonLd
+        }
       },
       {
-        '@type': 'WebSite',
-        name: 'Projet 2',
-        description: 'Description du projet 2'
+        '@type': 'ListItem',
+        position: 2,
+        item: {
+          '@type': 'Service',
+          name: 'Développement E-commerce',
+          description: 'Solutions e-commerce personnalisées avec gestion des stocks et paiements sécurisés.',
+          provider: jsonLd
+        }
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        item: {
+          '@type': 'Service',
+          name: 'Applications Web Sur Mesure',
+          description: 'Applications web personnalisées pour optimiser vos processus métier.',
+          provider: jsonLd
+        }
       }
     ]
   }
 };
 
-// Page Cahier des charges
-export const cahierChargesJsonLd = {
-  ...jsonLd,
+export const tarifsJsonLd = {
+  '@context': 'https://schema.org',
   '@type': 'WebPage',
+  name: 'Tarifs des services web - BTOV Développement La Rochelle',
+  description: 'Consultez nos tarifs pour la création de sites web, e-commerce et applications. Prix transparents et devis personnalisés.',
+  url: `${baseUrl}/tarifs`,
   mainEntity: {
-    '@type': 'WebForm',
-    name: 'Formulaire de cahier des charges',
-    description: 'Formulaire pour détailler votre projet web'
+    '@type': 'PriceSpecification',
+    priceCurrency: 'EUR',
+    minPrice: '1800',
+    maxPrice: '11000',
+    description: 'Tarifs des services de développement web',
+    validFrom: '2025-01-01',
+    validThrough: '2025-12-31'
   }
-};
-
-// Page Offre de lancement
-export const offreLancementJsonLd = {
-  ...jsonLd,
-  '@type': 'Offer',
-  name: 'Offre de lancement',
-  description: 'Profitez de notre offre spéciale de lancement',
-  validFrom: '2024-01-01',
-  validThrough: '2024-01-31',
-  price: '1000',
-  priceCurrency: 'EUR'
-};
-
-// Page Mentions légales
-export const mentionsLegalesJsonLd = {
-  ...jsonLd,
-  '@type': 'WebPage',
-  name: 'Mentions légales',
-  description: 'Mentions légales de B to V Développement'
-};
-
-// Page Politique de confidentialité
-export const politiqueConfidentialiteJsonLd = {
-  ...jsonLd,
-  '@type': 'WebPage',
-  name: 'Politique de confidentialité',
-  description: 'Politique de confidentialité de B to V Développement'
 };
 
 // Métadonnées par défaut
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.btov-dev.com'),
+  metadataBase: new URL(baseUrl),
   title: {
     default: 'Développeur Web freelance à La Rochelle | B to V Développement La Rochelle',
     template: '%s | B to V Développement',
@@ -201,13 +243,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://www.btov-dev.com',
+    url: baseUrl,
     siteName: 'B to V Développement',
     title: 'Développeur Web freelance à La Rochelle | B to V Développement',
     description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
     images: [
       {
-        url: 'https://www.btov-dev.com/images/og-image.jpg',
+        url: `${baseUrl}/images/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: 'B to V Développement - Développeur Web freelance à La Rochelle',
@@ -218,11 +260,11 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Développeur Web freelance à La Rochelle | B to V Développement',
     description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
-    images: ['https://www.btov-dev.com/images/og-image.jpg'],
+    images: [`${baseUrl}/images/og-image.jpg`],
     creator: '@btovdev',
   },
   alternates: {
-    canonical: 'https://www.btov-dev.com',
+    canonical: baseUrl,
   },
   icons: {
     icon: '/favicon.ico',
@@ -267,7 +309,7 @@ export const contactMetadata: Metadata = {
     description: 'Contactez votre développeur web freelance à La Rochelle pour un devis personnalisé.',
   },
   other: {
-    'application/ld+json': JSON.stringify(contactJsonLd)
+    'application/ld+json': JSON.stringify(homeJsonLd)
   },
 };
 
@@ -281,7 +323,7 @@ export const aboutMetadata: Metadata = {
     description: 'Découvrez B to V Développement, votre développeur web freelance à La Rochelle.',
   },
   other: {
-    'application/ld+json': JSON.stringify(aboutJsonLd)
+    'application/ld+json': JSON.stringify(homeJsonLd)
   },
 };
 

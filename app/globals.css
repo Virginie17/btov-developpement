@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -61,78 +61,77 @@
   }
 }
 
-/* Styles globaux pour les cartes et conteneurs */
-.glass-card {
-  @apply bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6;
+/* Styles personnalisés */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Styles globaux pour les formulaires */
+.text-gradient {
+  background: linear-gradient(90deg, #4F46E5, #9333EA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hover-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Styles pour les sections */
+.section-title {
+  @apply text-3xl md:text-4xl font-bold text-gray-900 mb-8;
+}
+
+.section-subtitle {
+  @apply text-xl md:text-2xl font-semibold text-gray-800 mb-4;
+}
+
+/* Styles pour les cartes */
+.service-card {
+  @apply bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300;
+}
+
+.portfolio-card {
+  @apply bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300;
+}
+
+/* Styles pour les boutons */
+.btn-primary {
+  @apply bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors duration-300;
+}
+
+.btn-secondary {
+  @apply bg-secondary-600 text-white px-6 py-3 rounded-lg hover:bg-secondary-700 transition-colors duration-300;
+}
+
+.btn-outline {
+  @apply border-2 border-primary-600 text-primary-600 px-6 py-3 rounded-lg hover:bg-primary-600 hover:text-white transition-colors duration-300;
+}
+
+/* Styles pour les formulaires */
 .form-input {
-  @apply w-full bg-gray-50/50 border-0 border-b-2 border-gray-300 focus:border-blue-600 
-         focus:ring-0 focus:bg-white transition-all duration-300 px-4 py-2;
+  @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent;
 }
 
 .form-label {
   @apply block text-sm font-medium text-gray-700 mb-1;
 }
 
-/* Styles globaux pour les boutons */
-.btn-primary {
-  @apply w-full py-3 px-6 rounded-full font-semibold text-white
-         bg-gradient-to-r from-blue-600 to-purple-600
-         hover:scale-[1.02] transform transition-all duration-300
-         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+/* Styles pour le footer */
+.footer-link {
+  @apply text-gray-400 hover:text-white transition-colors duration-200;
 }
 
-/* Styles pour les titres avec dégradé */
-.gradient-heading {
-  @apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+/* Styles pour la navigation */
+.nav-link {
+  @apply text-gray-700 hover:text-primary-600 transition-colors duration-200;
 }
 
-/* Animations et transitions */
-.hover-shadow-effect {
-  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
-}
-
-/* Messages de statut */
-.status-message {
-  @apply p-4 rounded-lg mb-4 text-center font-medium;
-}
-
-.status-success {
-  @apply bg-green-100 text-green-800;
-}
-
-.status-error {
-  @apply bg-red-100 text-red-800;
-}
-
-/* Utilitaires */
-@layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
-  }
-}
-
-/* Styles pour les filtres du portfolio */
-.filter-container {
-  @apply relative flex overflow-x-auto gap-4 pb-6 -mx-4 px-4;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.filter-button {
-  @apply flex-none px-5 py-2.5 rounded-full transition-all;
-  scroll-snap-align: start;
+.nav-link-active {
+  @apply text-primary-600 font-medium;
 }

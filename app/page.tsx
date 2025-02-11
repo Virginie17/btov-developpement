@@ -4,8 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Code, Globe, LineChart, Paintbrush } from 'lucide-react'
-import PromoBanner from '@/components/PromoBanner'
-import PromoSection from '@/components/PromoSection'
 import FAQ from '@/components/FAQ'
 import { homeJsonLd } from './metadata'
 import PageJsonLd from '../components/PageJsonLd'
@@ -38,7 +36,6 @@ export default function Home() {
     <>
       <PageJsonLd data={homeJsonLd} />
       <main className="flex min-h-screen flex-col items-center justify-between">
-        <PromoBanner />
         {/* Hero Section Responsive */}
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
@@ -86,8 +83,6 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
-
-        <PromoSection />
 
         {/* Services Section Responsive */}
         <section className="py-12 sm:py-20">
