@@ -148,10 +148,41 @@ export const jsonLd = {
       }
     ]
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5',
-    reviewCount: '12'
+  reviews: {
+    '@type': 'LocalBusiness',
+    name: 'BTOV Développement',
+    review: [
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'Marie D.'
+        },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1'
+        },
+        datePublished: '2024-01-15',
+        reviewBody: 'Excellent travail, site web parfaitement réalisé et dans les délais.'
+      },
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'Pierre L.'
+        },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1'
+        },
+        datePublished: '2024-01-20',
+        reviewBody: 'Service professionnel et résultat au-delà de nos attentes.'
+      }
+    ]
   }
 };
 
