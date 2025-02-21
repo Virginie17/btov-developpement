@@ -308,6 +308,14 @@ export const metadata: Metadata = {
   category: 'technology',
 };
 
+export const navigation = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'À propos', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
+
 export const homeMetadata: Metadata = {
   ...metadata,
   title: 'Développeur Web freelance à La Rochelle | B to V Développement',

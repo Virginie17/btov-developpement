@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import './globals.css'
 import Navigation from '../components/Navigation'
@@ -11,6 +11,10 @@ const outfit = Outfit({
   subsets: ['latin'],
   display: 'swap',
 })
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff'
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://btov-developpement.fr'),
@@ -34,7 +38,6 @@ export const metadata: Metadata = {
     ]
   },
   manifest: '/site.webmanifest',
-  themeColor: '#ffffff',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -61,7 +64,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
         <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="BTOV Développement" />

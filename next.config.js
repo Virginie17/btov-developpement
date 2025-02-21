@@ -3,19 +3,7 @@ const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true, // Nécessaire pour le mode export statique
-    domains: ['localhost'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'media2.dev.to',
-        pathname: '/dynamic/image/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'dev-to-uploads.s3.amazonaws.com',
-        pathname: '/uploads/**',
-      }
-    ]
+    domains: ['images.unsplash.com'],
   },
   typescript: {
     ignoreBuildErrors: true

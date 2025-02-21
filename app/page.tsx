@@ -5,6 +5,11 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Code, Globe, LineChart, Paintbrush } from 'lucide-react'
 import FAQ from '@/components/FAQ'
+import Testimonials from '@/components/Testimonials';
+import Technologies from '@/components/Technologies';
+import Stats from '@/components/Stats';
+import ServicesDetails from '@/components/ServicesDetails';
+import BlogPreview from '@/components/BlogPreview';
 import { homeJsonLd } from './metadata'
 import PageJsonLd from '../components/PageJsonLd'
 
@@ -59,14 +64,38 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="text-white space-y-4 sm:space-y-6"
             >
-              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-3xl sm:text-5xl md:text-7xl font-bold text-white drop-shadow-lg"
+              >
                 Transformons vos idées<br />
-                <span className="text-primary-400">en réalité digitale</span>
-              </h1>
-              <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-100 drop-shadow-md max-w-2xl mx-auto px-4">
-                Création de sites web professionnels à La Rochelle
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <motion.span 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-primary-400"
+                >
+                  en réalité digitale
+                </motion.span>
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-100 drop-shadow-md max-w-2xl mx-auto px-4"
+              >
+                Création et Refonte de sites web professionnels à La Rochelle
+                <br />
+                <span className="text-primary-300 font-medium">Sites modernes, rapides et optimisés SEO</span>
+              </motion.p>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              >
                 <Link
                   href="/contact"
                   className="w-full sm:w-auto bg-primary-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-primary-600 transition-all hover:scale-105 shadow-lg text-center"
@@ -79,29 +108,62 @@ export default function Home() {
                 >
                   Voir mes réalisations
                 </Link>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </section>
 
         {/* Services Section Responsive */}
-        <section className="py-12 sm:py-20">
+        <section className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Mes Services</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">Mes Services</h2>
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Des solutions web sur mesure pour répondre à vos besoins spécifiques
+              </p>
+            </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {services.map((service, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
-                  <div className="text-primary-600 dark:text-primary-400 mb-4">{service.icon}</div>
+                  <div className="text-primary-600 dark:text-primary-400 mb-4">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {service.icon}
+                    </motion.div>
+                  </div>
                   <h3 className="text-lg sm:text-xl font-semibold mb-2 dark:text-white">{service.title}</h3>
                   <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{service.description}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
+        
+        <ServicesDetails />
+        
+        <Stats />
+        
+        <Technologies />
+        
+        <BlogPreview />
+        
+        <Testimonials />
         
         {/* FAQ Section */}
         <FAQ />
@@ -110,7 +172,13 @@ export default function Home() {
         <section className="bg-secondary-50 dark:bg-gray-800 py-12 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div className="relative">
+              <motion.div 
+                className="relative"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src="/images/la rochelle3.webp"
@@ -127,7 +195,13 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 sm:w-48 sm:h-48 rounded-xl overflow-hidden shadow-lg">
+                <motion.div 
+                  className="absolute -bottom-6 -right-6 w-32 h-32 sm:w-48 sm:h-48 rounded-xl overflow-hidden shadow-lg"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
                   <Image
                     src="/images/photo.webp"
                     alt="Virginie - Développeuse Web"
@@ -142,9 +216,15 @@ export default function Home() {
                       target.src = '/images/fallback.jpg';
                     }}
                   />
-                </div>
-              </div>
-              <div className="text-center md:text-left">
+                </motion.div>
+              </motion.div>
+              <motion.div 
+                className="text-center md:text-left space-y-6"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 dark:text-white">
                   Développement Web à La Rochelle
                 </h2>
@@ -153,13 +233,23 @@ export default function Home() {
                   je mets mes compétences au service de vos projets digitaux. Basée à La Rochelle,
                   j'accompagne les entreprises locales et nationales dans leur transformation numérique.
                 </p>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                    <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">10+</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Projets Réalisés</div>
+                  </div>
+                  <div className="text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                    <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">100%</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Satisfaction Client</div>
+                  </div>
+                </div>
                 <Link
                   href="/about"
-                  className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+                  className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 group"
                 >
                   En savoir plus
                   <svg
-                    className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
+                    className="ml-2 w-4 h-4 sm:w-5 sm:h-5 transform transition-transform group-hover:translate-x-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -173,7 +263,7 @@ export default function Home() {
                     />
                   </svg>
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>

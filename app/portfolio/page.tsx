@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import PageJsonLd from '@/components/PageJsonLd';
 import { portfolioJsonLd } from '../metadata';
+import { ArrowUpRight } from 'lucide-react';
 
 const projects = [
   {
@@ -115,58 +116,7 @@ const projects = [
   }
 ];
 
-const ProjectCard = dynamic(() => Promise.resolve(({ project, isHovered, onHover, onLeave }: any) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    onHoverStart={() => onHover(project.id)}
-    onHoverEnd={() => onLeave(null)}
-    className="group relative bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-  >
-    <div className="relative h-48 sm:h-64 w-full overflow-hidden">
-    <Image
-  src={project.image}
-  alt={project.title}
-  width={400}
-  height={300}
-  className="object-cover"
-  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-  quality={80}
-/>
-      <div className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
-        isHovered ? 'opacity-100' : 'opacity-0'
-      }`}>
-        <div className="h-full flex flex-col justify-center items-center text-white p-4 sm:p-6 opacity-0 group-hover:opacity-100 transition-opacity">
-          <h4 className="text-base sm:text-lg font-semibold mb-2">Fonctionnalités :</h4>
-          <ul className="list-disc list-inside text-xs sm:text-sm">
-            {project.features.map((feature: string, index: number) => (
-              <li key={index}>{feature}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div className="p-4 sm:p-6">
-      <h3 className="text-lg sm:text-xl font-semibold mb-2 text-zinc-900 dark:text-white">
-        {project.title}
-      </h3>
-      <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mb-4">
-        {project.description}
-      </p>
-      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
-        {project.technologies.map((tech: string, index: number) => (
-          <span
-            key={index}
-            className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-      
-    </div>
-  </motion.div>
-)), {
+const ProjectCard = dynamic(() => import('@/components/ProjectCard'), {
   loading: () => (
     <div className="flex justify-center items-center h-64">
       <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
@@ -193,76 +143,82 @@ export default function Portfolio() {
   return (
     <>
       <PageJsonLd data={portfolioJsonLd} />
-      <div className="container mx-auto px-4 py-8 sm:py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8 sm:mb-12"
-      >
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Mon Portfolio</h1>
-        
-        <p className="text-base sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto px-4">
-          Découvrez mes dernières réalisations en développement web
-        </p>
-      </motion.div>
+      <div className="container mx-auto px-4 py-12 sm:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-primary-700">
+            Mon Portfolio
+          </h1>
+          <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+            Découvrez mes dernières réalisations en développement web et design d'interface
+          </p>
+        </motion.div>
 
-      <div className="relative mb-8">
-        {/* Version mobile : select */}
-        <div className="sm:hidden w-full px-4">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 
-            border-2 border-zinc-200 dark:border-zinc-700
-            shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:ring-opacity-50 
-            transition-all duration-200 appearance-none
-            bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234F46E5%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
-            bg-[length:24px] bg-[right_16px_center] bg-no-repeat
-            font-medium text-base"
-          >
+        <div className="relative mb-8">
+          {/* Version mobile : select */}
+          <div className="sm:hidden w-full px-4">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 
+              border-2 border-zinc-200 dark:border-zinc-700
+              shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:ring-opacity-50 
+              transition-all duration-200 appearance-none
+              bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234F46E5%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+              bg-[length:24px] bg-[right_16px_center] bg-no-repeat
+              font-medium text-base"
+            >
+              {categories.map((category) => (
+                <option 
+                  key={category.id} 
+                  value={category.id}
+                  className="py-2 bg-zinc-100 dark:bg-zinc-800"
+                >
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Version desktop : boutons */}
+          <div className="hidden sm:flex justify-center gap-4 px-4">
             {categories.map((category) => (
-              <option 
-                key={category.id} 
-                value={category.id}
-                className="py-2 bg-zinc-100 dark:bg-zinc-800"
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-5 py-2.5 rounded-full transition-all text-base font-medium shadow-sm whitespace-nowrap ${
+                  selectedCategory === category.id
+                    ? 'bg-primary-500 text-white scale-105 transform'
+                    : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                }`}
               >
                 {category.name}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
         </div>
 
-        {/* Version desktop : boutons */}
-        <div className="hidden sm:flex justify-center gap-4 px-4">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-5 py-2.5 rounded-full transition-all text-base font-medium shadow-sm whitespace-nowrap ${
-                selectedCategory === category.id
-                  ? 'bg-primary-500 text-white scale-105 transform'
-                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        >
+          <AnimatePresence>
+            {filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                isHovered={hoveredProject === project.id}
+                onHover={setHoveredProject}
+                onLeave={() => setHoveredProject(null)}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            isHovered={hoveredProject === project.id}
-            onHover={setHoveredProject}
-            onLeave={() => setHoveredProject(null)}
-          />
-        ))}
-      </div>
-    </div>
     </>
   );
 }
