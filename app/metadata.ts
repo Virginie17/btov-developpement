@@ -326,6 +326,66 @@ export const tarifsJsonLd = {
   }
 };
 
+export const mentionsLegalesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Mentions Légales - BTOV Développement',
+  description: 'Mentions légales et conditions d\'utilisation du site BTOV Développement.',
+  url: `${baseUrl}/mentions-legales`,
+  mainEntity: {
+    '@type': 'WebContent',
+    name: 'Mentions Légales',
+    text: 'Informations légales concernant BTOV Développement, entreprise de développement web à La Rochelle.',
+    about: {
+      '@type': 'Organization',
+      name: 'BTOV Développement',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'La Rochelle',
+        addressRegion: 'Nouvelle-Aquitaine',
+        addressCountry: 'FR'
+      },
+      email: 'btovdeveloppement@gmail.com'
+    }
+  }
+};
+
+export const portfolioJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Portfolio - BTOV Développement',
+  description: 'Découvrez mes réalisations en développement web : sites vitrines, e-commerce et applications web sur mesure.',
+  url: `${baseUrl}/portfolio`,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: [
+      {
+        '@type': 'WebSite',
+        name: 'Sites Web',
+        description: 'Sites vitrines et e-commerce développés sur mesure'
+      },
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Applications Web',
+        description: 'Applications web personnalisées'
+      }
+    ]
+  }
+};
+
+export const politiqueConfidentialiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Politique de Confidentialité - BTOV Développement',
+  description: 'Politique de confidentialité et protection des données personnelles de BTOV Développement.',
+  url: `${baseUrl}/politique-de-confidentialite`,
+  mainEntity: {
+    '@type': 'WebContent',
+    name: 'Politique de Confidentialité',
+    text: 'Informations sur la collecte et le traitement des données personnelles par BTOV Développement.'
+  }
+};
+
 export const metadata: Metadata = {
   metadataBase: siteMetadata.metadataBase,
   title: {
@@ -363,13 +423,47 @@ export const metadata: Metadata = {
   }
 };
 
-export const navigation = [
-  { name: 'Accueil', href: '/' },
-  { name: 'Services', href: '/services' },
-  { name: 'Portfolio', href: '/portfolio' },
-  { name: 'À propos', href: '/about' },
-  { name: 'Contact', href: '/contact' },
-];
+export const mentionsLegalesMetadata: Metadata = {
+  ...metadata,
+  title: 'Mentions Légales | BTOV Développement',
+  description: 'Mentions légales et conditions d\'utilisation du site BTOV Développement.',
+  openGraph: {
+    ...metadata.openGraph,
+    title: 'Mentions Légales | BTOV Développement',
+    description: 'Mentions légales et conditions d\'utilisation du site BTOV Développement.'
+  },
+  other: {
+    'application/ld+json': JSON.stringify(mentionsLegalesJsonLd)
+  }
+};
+
+export const portfolioMetadata: Metadata = {
+  ...metadata,
+  title: 'Portfolio | BTOV Développement',
+  description: 'Découvrez mes réalisations en développement web : sites vitrines, e-commerce et applications web sur mesure.',
+  openGraph: {
+    ...metadata.openGraph,
+    title: 'Portfolio | BTOV Développement',
+    description: 'Découvrez mes réalisations en développement web : sites vitrines, e-commerce et applications web sur mesure.'
+  },
+  other: {
+    'application/ld+json': JSON.stringify(portfolioJsonLd)
+  }
+};
+
+export const politiqueConfidentialiteMetadata: Metadata = {
+  ...metadata,
+  title: 'Politique de Confidentialité | BTOV Développement',
+  description: 'Politique de confidentialité et protection des données personnelles de BTOV Développement.',
+  openGraph: {
+    ...metadata.openGraph,
+    title: 'Politique de Confidentialité | BTOV Développement',
+    description: 'Politique de confidentialité et protection des données personnelles de BTOV Développement.'
+  },
+  other: {
+    'application/ld+json': JSON.stringify(politiqueConfidentialiteJsonLd)
+  }
+};
 
 export const homeMetadata: Metadata = {
   ...metadata,
@@ -426,5 +520,15 @@ export const aboutMetadata: Metadata = {
     'application/ld+json': JSON.stringify(aboutJsonLd)
   },
 };
+
+export const navigation = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'À propos', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Mentions Légales', href: '/mentions-legales' },
+  { name: 'Politique de Confidentialité', href: '/politique-de-confidentialite' },
+];
 
 export default metadata;
