@@ -79,10 +79,17 @@ export const jsonLd = {
   offers: {
     '@type': 'AggregateOffer',
     offerCount: '6',
-    lowPrice: '1800',
+    lowPrice: '399',
     highPrice: '11000',
     priceCurrency: 'EUR',
     offers: [
+      {
+        '@type': 'Offer',
+        name: 'Landing Page Express',
+        description: 'Landing page professionnelle avec template prédéfini',
+        price: '399',
+        priceCurrency: 'EUR'
+      },
       {
         '@type': 'Offer',
         name: 'Site Vitrine',
@@ -195,6 +202,70 @@ export const homeJsonLd = {
   mainEntity: jsonLd
 };
 
+export const aboutJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'À propos - BTOV Développement La Rochelle',
+  description: 'Découvrez BTOV Développement, votre partenaire en développement web à La Rochelle. Expertise, professionnalisme et solutions sur mesure.',
+  url: `${baseUrl}/about`,
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Virginie Chaffard',
+    jobTitle: 'Développeur Web Freelance',
+    description: 'Développeur web freelance à La Rochelle, spécialisée dans la création de sites web et d\'applications sur mesure.',
+    image: `${baseUrl}/images/photo.webp`,
+    sameAs: [
+      'https://www.linkedin.com/in/virginieduboscq/',
+      'https://github.com/Virginie17'
+    ]
+  }
+};
+
+export const cahierChargesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Cahier des Charges - BTOV Développement',
+  description: 'Guide pour la rédaction de votre cahier des charges. Définissez clairement vos besoins pour votre projet web.',
+  url: `${baseUrl}/cahier-des-charges`,
+  mainEntity: {
+    '@type': 'HowTo',
+    name: 'Comment rédiger un cahier des charges efficace',
+    description: 'Guide étape par étape pour rédiger un cahier des charges complet pour votre projet web',
+    step: [
+      {
+        '@type': 'HowToStep',
+        name: 'Présentation du projet',
+        text: 'Définissez les objectifs et le contexte de votre projet'
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Spécifications techniques',
+        text: 'Détaillez les fonctionnalités et les exigences techniques'
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Planning et budget',
+        text: 'Établissez un calendrier et un budget prévisionnel'
+      }
+    ]
+  }
+};
+
+export const contactJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact - BTOV Développement La Rochelle',
+  description: 'Contactez BTOV Développement pour vos projets web à La Rochelle. Devis gratuit et réponse rapide.',
+  url: `${baseUrl}/contact`,
+  mainEntity: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: 'btovdeveloppement@gmail.com',
+    areaServed: 'FR',
+    availableLanguage: ['French', 'English']
+  }
+};
+
 export const servicesJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -247,7 +318,7 @@ export const tarifsJsonLd = {
   mainEntity: {
     '@type': 'PriceSpecification',
     priceCurrency: 'EUR',
-    minPrice: '1800',
+    minPrice: '399',
     maxPrice: '11000',
     description: 'Tarifs des services de développement web',
     validFrom: '2025-01-01',
@@ -255,57 +326,41 @@ export const tarifsJsonLd = {
   }
 };
 
-// Métadonnées par défaut
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: siteMetadata.metadataBase,
   title: {
-    default: 'Développeur Web freelance à La Rochelle | B to V Développement La Rochelle',
-    template: '%s | B to V Développement',
+    default: siteMetadata.name,
+    template: `%s | ${siteMetadata.name}`
   },
-  description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering. 10+ ans d\'expérience pour booster votre présence en ligne.',
-  keywords: ['développeur web freelance La Rochelle', 'création site web La Rochelle', 'SEO La Rochelle', 'Prompt Engineering', 'développement web'],
-  authors: [{ name: 'Virginie' }],
-  creator: 'B to V Développement',
-  publisher: 'B to V Développement',
+  description: siteMetadata.description,
+  keywords: siteMetadata.keywords,
+  authors: siteMetadata.authors,
+  creator: siteMetadata.creator,
+  publisher: siteMetadata.publisher,
   robots: {
     index: true,
-    follow: true,
+    follow: true
   },
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
     url: baseUrl,
-    siteName: 'B to V Développement',
-    title: 'Développeur Web freelance à La Rochelle | B to V Développement',
-    description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
+    siteName: siteMetadata.name,
     images: [
       {
         url: `${baseUrl}/images/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: 'B to V Développement - Développeur Web freelance à La Rochelle',
-      },
-    ],
+        alt: siteMetadata.name
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Développeur Web freelance à La Rochelle | B to V Développement',
-    description: 'Développeur web freelance à La Rochelle, spécialisé en création de sites sur-mesure, optimisation IA, SEO & Prompt Engineering',
-    images: [`${baseUrl}/images/og-image.jpg`],
-    creator: '@btovdev',
-  },
-  alternates: {
-    canonical: baseUrl,
-  },
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/site.webmanifest',
-  verification: {
-    google: 'google-site-verification-code',
-  },
-  category: 'technology',
+    title: siteMetadata.name,
+    description: siteMetadata.description,
+    images: [`${baseUrl}/images/og-image.jpg`]
+  }
 };
 
 export const navigation = [
@@ -325,6 +380,9 @@ export const homeMetadata: Metadata = {
     title: 'Développeur Web freelance à La Rochelle | B to V Développement',
     description: 'Développeur web freelance à La Rochelle, expert en création de sites web sur-mesure et optimisation SEO.',
   },
+  other: {
+    'application/ld+json': JSON.stringify(homeJsonLd)
+  },
 };
 
 export const servicesMetadata: Metadata = {
@@ -335,6 +393,9 @@ export const servicesMetadata: Metadata = {
     ...metadata.openGraph,
     title: 'Services de Développement Web & SEO | B to V Développement La Rochelle',
     description: 'Services de développement web et optimisation SEO sur-mesure à La Rochelle.',
+  },
+  other: {
+    'application/ld+json': JSON.stringify(servicesJsonLd)
   },
 };
 
@@ -348,7 +409,7 @@ export const contactMetadata: Metadata = {
     description: 'Contactez votre développeur web freelance à La Rochelle pour un devis personnalisé.',
   },
   other: {
-    'application/ld+json': JSON.stringify(homeJsonLd)
+    'application/ld+json': JSON.stringify(contactJsonLd)
   },
 };
 
@@ -362,7 +423,7 @@ export const aboutMetadata: Metadata = {
     description: 'Découvrez B to V Développement, votre développeur web freelance à La Rochelle.',
   },
   other: {
-    'application/ld+json': JSON.stringify(homeJsonLd)
+    'application/ld+json': JSON.stringify(aboutJsonLd)
   },
 };
 
