@@ -1,24 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true, // Nécessaire pour le mode export statique
-    domains: ['images.unsplash.com'],
-  },
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  // Optimisations de build
-  swcMinify: true,
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+  env: {
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
   },
+  images: {
+    unoptimized: true,
+    domains: ['images.unsplash.com'],
+  },
   webpack: (config, { dev, isServer }) => {
-    // Optimisation pour la production uniquement
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,

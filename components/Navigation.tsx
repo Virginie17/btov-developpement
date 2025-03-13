@@ -58,7 +58,9 @@ export default function Navigation() {
             <Link href="/tarifs" className="px-3 py-2 text-sm text-gray-700 hover:text-primary-500 transition-colors">
               Tarifs
             </Link>
-            
+            <Link href="/landing-page-express" className="px-3 py-2 text-sm font-semibold text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors">
+              Offre Express 399€
+            </Link>
             <Link href="/cahier-des-charges" className="px-3 py-2 text-sm text-gray-700 hover:text-primary-500 transition-colors">
               Cahier des charges
             </Link>
@@ -109,7 +111,13 @@ export default function Navigation() {
               >
                 Tarifs
               </Link>
-              
+              <Link
+                href="/landing-page-express"
+                className="px-4 py-2 text-primary-600 font-semibold bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors"
+                onClick={toggleMenu}
+              >
+                Offre Express 399€
+              </Link>
               <Link
                 href="/cahier-des-charges"
                 className="px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
