@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 interface ProjectCardProps {
   project: {
@@ -33,14 +33,14 @@ export default function ProjectCard({ project, isHovered, onHover, onLeave }: Pr
       className="group relative bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="relative h-48 sm:h-64 w-full overflow-hidden">
-        <Image
+        <OptimizedImage
           src={project.image}
           alt={project.title}
-          width={400}
-          height={300}
+          width={800}
+          height={600}
+          preset="portfolio"
           className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          quality={90}
+          quality={85}
         />
         <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 ${
           isHovered ? 'opacity-100' : 'opacity-0'

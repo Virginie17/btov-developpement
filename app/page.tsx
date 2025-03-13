@@ -7,7 +7,6 @@ import { Code, Globe, LineChart, Paintbrush } from 'lucide-react'
 import FAQ from '@/components/FAQ'
 import Testimonials from '@/components/Testimonials';
 import Technologies from '@/components/Technologies';
-import Stats from '@/components/Stats';
 import ServicesDetails from '@/components/ServicesDetails';
 import BlogPreview from '@/components/BlogPreview';
 import { homeJsonLd } from './metadata'
@@ -156,8 +155,6 @@ export default function Home() {
         </section>
         
         <ServicesDetails />
-        
-        <Stats />
         
         <Technologies />
         

@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, Calendar, Tag, ArrowLeft, Eye } from 'lucide-react';
 import { type Article } from '@/app/blog/types';
+import OptimizedImage from './OptimizedImage';
 
 export default function BlogPost({ article }: { article: Article }) {
   if (!article) {
@@ -42,12 +42,14 @@ export default function BlogPost({ article }: { article: Article }) {
           </Link>
 
           <div className="relative h-[400px] rounded-2xl overflow-hidden mb-8">
-            <Image
+            <OptimizedImage
               src={article.image}
               alt={article.title}
-              fill
-              className="object-cover"
+              width={1200}
+              height={400}
+              preset="blog"
               priority
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -79,12 +81,14 @@ export default function BlogPost({ article }: { article: Article }) {
           </div>
 
           <div className="flex items-center mb-8">
-            <Image
+            <OptimizedImage
               src={article.author.avatar}
               alt={article.author.name}
               width={48}
               height={48}
               className="rounded-full"
+              preset="testimonial"
+              quality={90}
             />
             <div className="ml-4">
               <div className="text-gray-900 dark:text-white font-medium">

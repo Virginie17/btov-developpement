@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Clock, ArrowRight, Tag, Eye } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from './OptimizedImage';
 import { articles } from '@/app/blog/data';
 
 const featuredPosts = Object.values(articles).slice(0, 3);
@@ -63,11 +63,14 @@ export default function BlogPreview() {
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               <div className="relative h-48">
-                <Image
+                <OptimizedImage
                   src={post.image}
                   alt={post.title}
-                  fill
+                  width={800}
+                  height={400}
+                  preset="blog"
                   className="object-cover"
+                  quality={75}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full text-sm font-medium bg-white/90 dark:bg-gray-800/90 text-primary-600 dark:text-primary-400">
@@ -92,7 +95,7 @@ export default function BlogPreview() {
                   {post.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {post.excerpt}
+                  {post.excerpt || post.content.slice(0, 150) + '...'}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-4">

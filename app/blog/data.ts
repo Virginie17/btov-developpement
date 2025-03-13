@@ -2,6 +2,7 @@ export const articles = {
   '1': {
     id: 1,
     title: "Les meilleures pratiques du développement web moderne",
+    excerpt: "Découvrez les techniques et outils essentiels pour créer des sites web performants et maintenables en 2024, incluant les meilleures pratiques en matière de performance, d'architecture et d'expérience utilisateur.",
     content: `
       Le développement web évolue constamment, et il est crucial de rester à jour avec les meilleures pratiques. Dans cet article, nous allons explorer les techniques et outils essentiels pour créer des sites web performants et maintenables en 2024.
 
@@ -46,6 +47,7 @@ export const articles = {
   '2': {
     id: 2,
     title: "Optimiser son site pour le SEO en 2024",
+    excerpt: "Explorez les techniques les plus efficaces pour optimiser votre référencement naturel en 2024, des fondamentaux du SEO aux facteurs techniques avancés et stratégies de contenu.",
     content: `
       Le référencement naturel reste un élément crucial pour la visibilité en ligne. Découvrons les techniques les plus efficaces pour optimiser votre site en 2024.
 
@@ -90,6 +92,7 @@ export const articles = {
   '3': {
     id: 3,
     title: "L'importance du design UX dans vos projets web",
+    excerpt: "Découvrez pourquoi un bon design UX est crucial pour le succès de vos projets web et comment appliquer les principes fondamentaux pour améliorer l'expérience utilisateur.",
     content: `
       Un bon design UX peut faire la différence entre un site qui convertit et un site qui fait fuir les visiteurs. Explorons les principes clés du design UX.
 

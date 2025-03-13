@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type PresetType = 'blog' | 'portfolio' | 'event' | 'testimonial';
 type EffectType = 'tech' | 'warm' | 'vibrant' | 'soft' | 'dramatic' | 'retro' | 'event' | 'business' | 'modern';
+type ImageFormat = 'original' | 'webp' | 'avif';
 
 interface OptimizedImageProps {
   src: string;
@@ -15,6 +16,7 @@ interface OptimizedImageProps {
   priority?: boolean;
   className?: string;
   transition?: boolean;
+  quality?: number;
 }
 
 const presets = {
@@ -36,6 +38,25 @@ const presets = {
   }
 };
 
+const shimmer = (w: number, h: number) => `
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#f6f7f8" offset="20%" />
+      <stop stop-color="#edeef1" offset="50%" />
+      <stop stop-color="#f6f7f8" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="#f6f7f8" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`;
+
+const toBase64 = (str: string) =>
+  typeof window === 'undefined'
+    ? Buffer.from(str).toString('base64')
+    : window.btoa(str);
+
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
@@ -45,36 +66,45 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   preset,
   priority = false,
   className = '',
-  transition = true
+  transition = true,
+  quality = 75
 }) => {
   const [imageSrc, setImageSrc] = useState<string>(src);
   const [loading, setLoading] = useState<boolean>(true);
+  const [format, setFormat] = useState<ImageFormat>('original');
   const [currentEffect, setCurrentEffect] = useState<EffectType | undefined>(
     effect || (preset ? presets[preset].defaultEffect : undefined)
   );
 
   useEffect(() => {
-    const loadImage = async () => {
+    const checkImageSupport = async () => {
       try {
+        const avifSupported = await checkAVIFSupport();
         const webpSupported = await checkWebPSupport();
+        
         let finalSrc = src;
+        let finalFormat: ImageFormat = 'original';
         
         if (currentEffect) {
-          finalSrc = `/images/blog/effects/${src.split('/').pop()}`;
+          finalSrc = `/images/effects/${currentEffect}/${src.split('/').pop()}`;
+        } else if (avifSupported) {
+          finalSrc = src.replace(/\.(jpg|jpeg|png)$/, '.avif');
+          finalFormat = 'avif';
         } else if (webpSupported) {
-          finalSrc = `/images/blog/webp/${src.split('/').pop()?.replace(/\.(jpg|jpeg|png)$/, '.webp')}`;
+          finalSrc = src.replace(/\.(jpg|jpeg|png)$/, '.webp');
+          finalFormat = 'webp';
         }
 
         setImageSrc(finalSrc);
+        setFormat(finalFormat);
       } catch (error) {
-        console.error('Error loading image:', error);
-        setImageSrc(src);
+        console.error('Error checking image support:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadImage();
+    checkImageSupport();
   }, [src, currentEffect]);
 
   useEffect(() => {
@@ -97,6 +127,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     exit: { opacity: 0, scale: 0.95 }
   };
 
+  const actualWidth = width || 800;
+  const actualHeight = height || 600;
+
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <AnimatePresence mode="wait">
@@ -107,21 +140,31 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           exit="exit"
           variants={imageVariants}
           transition={{ duration: 0.3 }}
-          className={`${loading ? 'animate-pulse bg-gray-200' : ''}`}
+          className="relative"
         >
           <Image
             src={imageSrc}
             alt={alt}
-            width={width || 800}
-            height={height || 600}
+            width={actualWidth}
+            height={actualHeight}
             priority={priority}
-            className={`transition-all duration-300 ${loading ? 'opacity-0 scale-105' : 'opacity-100 scale-100'}`}
+            quality={quality}
+            className={`transition-all duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(actualWidth, actualHeight))}`}
             onLoadingComplete={() => setLoading(false)}
             onError={() => {
               setLoading(false);
               setImageSrc(src);
+              setFormat('original');
             }}
           />
+          {loading && (
+            <div 
+              className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+              style={{ backgroundSize: '200% 100%' }}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
@@ -132,10 +175,21 @@ const checkWebPSupport = async (): Promise<boolean> => {
   if (typeof window === 'undefined') return false;
   
   return new Promise<boolean>((resolve) => {
-    const img = document.createElement('img') as HTMLImageElement;
+    const img = document.createElement('img');
     img.onload = () => resolve(true);
     img.onerror = () => resolve(false);
     img.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
+  });
+};
+
+const checkAVIFSupport = async (): Promise<boolean> => {
+  if (typeof window === 'undefined') return false;
+
+  return new Promise<boolean>((resolve) => {
+    const img = document.createElement('img');
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=';
   });
 };
 
