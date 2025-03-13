@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { articleApi } from '@/services/api';
 
 const postsDirectory = path.join(process.cwd(), 'content/blog');
 
@@ -59,14 +58,11 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    // Enrichir l'article avec les données de l'API correspondante
-    const enrichedData = await articleApi.enrichArticleWithData(data.category, {
+    return {
       slug,
       content,
       ...data,
-    });
-
-    return enrichedData as BlogPost;
+    } as BlogPost;
   } catch (error) {
     return null;
   }
