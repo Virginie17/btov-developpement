@@ -121,7 +121,6 @@ const services = [
     features: [
       "Analyse de l'existant",
       "Design moderne et attractif",
-      "Animations 3D",
       "Amélioration de l'expérience utilisateur",
       "Optimisation des performances",
       "Migration de contenu",

@@ -4,6 +4,13 @@ import { motion } from 'framer-motion';
 import { Code, Globe, LineChart, Paintbrush } from 'lucide-react';
 import PageJsonLd from '@/components/PageJsonLd';
 import { servicesJsonLd } from '../metadata';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, useGLTF } from '@react-three/drei';
+
+function WebsiteModel() {
+  const { scene } = useGLTF('/website_model.glb');
+  return <primitive object={scene} scale={1.5} position={[0, -1, 0]} />;
+}
 
 export default function Services() {
   return (
@@ -45,16 +52,20 @@ export default function Services() {
                 </div>
                 <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
                 <p className="text-gray-600 mb-6">{service.description}</p>
-                <ul className="space-y-3">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
-                      <svg className="h-5 w-5 text-primary-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                {service.model ? (
+                  <div className="mb-6">{service.model}</div>
+                ) : (
+                  <ul className="space-y-3">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center text-gray-600">
+                        <svg className="h-5 w-5 text-primary-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </motion.div>
             ))}
           </div>
@@ -121,12 +132,21 @@ const services = [
     features: [
       "Analyse de l'existant",
       "Design moderne et attractif",
-      "Animations 3D",
       "Amélioration de l'expérience utilisateur",
       "Optimisation des performances",
       "Migration de contenu",
       "Mise à niveau technologique"
-    ]
+    ],
+    model: (
+      <div className="h-64 w-full rounded-lg overflow-hidden">
+        <Canvas camera={{ position: [0, 0, 5] }}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <WebsiteModel />
+          <OrbitControls enableZoom={false} autoRotate />
+        </Canvas>
+      </div>
+    )
   },
   {
     title: "Référencement SEO",
