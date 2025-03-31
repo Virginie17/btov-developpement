@@ -17,14 +17,15 @@ import Link from 'next/link';
 
 interface SceneProps {
   mouse: React.MutableRefObject<[number, number]>;
+  isMobile: boolean;
 }
 
-function Scene({ mouse }: SceneProps) {
+function Scene({ mouse, isMobile }: SceneProps) {
   const mesh = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 
   // Ajustement de la taille en fonction de la largeur de l'écran
-  const scale = viewport.width < 768 ? [1.2, 1.2, 1.2] : [2.8, 2.8, 2.8];
+  const scale = isMobile ? [1.2, 1.2, 1.2] : [2.2, 2.2, 2.2];
   
   useFrame(() => {
     if (mesh.current) {
@@ -47,7 +48,7 @@ function Scene({ mouse }: SceneProps) {
         speed={1.5}
         rotationIntensity={0.5}
         floatIntensity={0.5}
-        position={[0, viewport.width < 768 ? 0 : 0.5, 0] as [number, number, number]}
+        position={[0, isMobile ? 0 : 0.5, 0] as [number, number, number]}
       >
         <mesh ref={mesh} scale={scale as [number, number, number]}>
           <sphereGeometry args={[1, 64, 64]} />
@@ -57,7 +58,7 @@ function Scene({ mouse }: SceneProps) {
             clearcoat={1}
             clearcoatRoughness={0}
             metalness={0.5}
-            distort={viewport.width < 768 ? 0.3 : 0.4}
+            distort={isMobile ? 0.3 : 0.4}
             speed={2}
           />
         </mesh>
@@ -66,7 +67,7 @@ function Scene({ mouse }: SceneProps) {
       <ContactShadows
         position={[0, -2, 0]}
         opacity={0.5}
-        scale={viewport.width < 768 ? 6 : 10}
+        scale={isMobile ? 6 : 10}
         blur={2}
         far={4}
       />
@@ -77,10 +78,19 @@ function Scene({ mouse }: SceneProps) {
 export default function ModernHero3D() {
   const mouse = useRef<[number, number]>([0, 0]);
   const [textOpacity, setTextOpacity] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleMouseMove = (event: MouseEvent) => {
-      // Réduire la sensibilité du mouvement sur mobile
       const sensitivity = window.innerWidth < 768 ? 0.05 : 0.1;
       mouse.current = [
         (event.clientX - window.innerWidth / 2) * sensitivity,
@@ -93,18 +103,23 @@ export default function ModernHero3D() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  if (!isMounted) {
+    return null; // Rendu côté serveur : ne rien afficher
+  }
 
   return (
     <div className="h-screen w-full relative">
       <Canvas
         className="absolute inset-0"
-        camera={{ position: [0, 0, window.innerWidth < 768 ? 4 : 5], fov: 45 }}
+        camera={{ position: [0, 0, isMobile ? 4 : 5], fov: 45 }}
       >
         <PerspectiveCamera
           makeDefault
-          position={[0, 0, window.innerWidth < 768 ? 4 : 5]}
+          position={[0, 0, isMobile ? 4 : 5]}
           fov={45}
         />
         <color attach="background" args={['#000']} />
@@ -115,7 +130,7 @@ export default function ModernHero3D() {
           penumbra={1}
           intensity={1}
         />
-        <Scene mouse={mouse} />
+        <Scene mouse={mouse} isMobile={isMobile} />
         <Environment preset="city" />
         <EffectComposer>
           <Bloom
