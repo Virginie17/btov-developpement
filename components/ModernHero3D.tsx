@@ -23,6 +23,9 @@ function Scene({ mouse }: SceneProps) {
   const mesh = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 
+  // Ajustement de la taille en fonction de la largeur de l'écran
+  const scale = viewport.width < 768 ? [1.2, 1.2, 1.2] : [2.8, 2.8, 2.8];
+  
   useFrame(() => {
     if (mesh.current) {
       mesh.current.rotation.x = THREE.MathUtils.lerp(
@@ -44,8 +47,9 @@ function Scene({ mouse }: SceneProps) {
         speed={1.5}
         rotationIntensity={0.5}
         floatIntensity={0.5}
+        position={[0, viewport.width < 768 ? 0 : 0.5, 0] as [number, number, number]}
       >
-        <mesh ref={mesh} scale={[2, 2, 2]}>
+        <mesh ref={mesh} scale={scale as [number, number, number]}>
           <sphereGeometry args={[1, 64, 64]} />
           <MeshDistortMaterial
             color="#4338ca"
@@ -53,7 +57,7 @@ function Scene({ mouse }: SceneProps) {
             clearcoat={1}
             clearcoatRoughness={0}
             metalness={0.5}
-            distort={0.4}
+            distort={viewport.width < 768 ? 0.3 : 0.4}
             speed={2}
           />
         </mesh>
@@ -62,7 +66,7 @@ function Scene({ mouse }: SceneProps) {
       <ContactShadows
         position={[0, -2, 0]}
         opacity={0.5}
-        scale={10}
+        scale={viewport.width < 768 ? 6 : 10}
         blur={2}
         far={4}
       />
@@ -76,9 +80,11 @@ export default function ModernHero3D() {
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
+      // Réduire la sensibilité du mouvement sur mobile
+      const sensitivity = window.innerWidth < 768 ? 0.05 : 0.1;
       mouse.current = [
-        (event.clientX - window.innerWidth / 2) * 0.1,
-        (event.clientY - window.innerHeight / 2) * 0.1
+        (event.clientX - window.innerWidth / 2) * sensitivity,
+        (event.clientY - window.innerHeight / 2) * sensitivity
       ];
     };
 
@@ -94,11 +100,11 @@ export default function ModernHero3D() {
     <div className="h-screen w-full relative">
       <Canvas
         className="absolute inset-0"
-        camera={{ position: [0, 0, 5], fov: 45 }}
+        camera={{ position: [0, 0, window.innerWidth < 768 ? 4 : 5], fov: 45 }}
       >
         <PerspectiveCamera
           makeDefault
-          position={[0, 0, 5]}
+          position={[0, 0, window.innerWidth < 768 ? 4 : 5]}
           fov={45}
         />
         <color attach="background" args={['#000']} />
