@@ -44,13 +44,21 @@ const testimonials: Testimonial[] = [
   }
 ];
 
-const TestimonialSection: React.FC = () => {
+interface TestimonialSectionProps {
+  title?: string;
+  subtitle?: string;
+}
+
+const TestimonialSection: React.FC<TestimonialSectionProps> = ({ 
+  title = 'Ce que nos clients disent',
+  subtitle = 'Découvrez les témoignages de clients satisfaits qui ont choisi notre offre Landing Page Express pour démarrer leur présence en ligne.'
+}) => {
   return (
     <section className="py-16 px-4 bg-gray-50" aria-labelledby="testimonials-heading">
       <div className="max-w-6xl mx-auto">
-        <h2 id="testimonials-heading" className="text-3xl font-bold text-center mb-4">Ce que nos clients disent</h2>
+        <h2 id="testimonials-heading" className="text-3xl font-bold text-center mb-4">{title}</h2>
         <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-          Découvrez les témoignages de clients satisfaits qui ont choisi notre offre Landing Page Express pour démarrer leur présence en ligne.
+          {subtitle}
         </p>
         
         <div className="grid md:grid-cols-3 gap-8" role="list" aria-label="Témoignages de clients">
