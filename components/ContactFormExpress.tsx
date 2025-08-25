@@ -35,7 +35,10 @@ export default function ContactFormExpress() {
   // Calculate form completion progress
   useEffect(() => {
     const requiredFields = ['name', 'email', 'message'];
-    const completedFields = requiredFields.filter(field => formData[field as keyof typeof formData]?.trim().length > 0);
+    const completedFields = requiredFields.filter(field => {
+      const value = formData[field as keyof typeof formData];
+      return typeof value === 'string' && value.trim().length > 0;
+    });
     setFormProgress(Math.floor((completedFields.length / requiredFields.length) * 100));
   }, [formData]);
 
