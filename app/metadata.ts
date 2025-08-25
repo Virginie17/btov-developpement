@@ -397,6 +397,13 @@ export const metadata: Metadata = {
   authors: siteMetadata.authors,
   creator: siteMetadata.creator,
   publisher: siteMetadata.publisher,
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fr-FR': '/',
+      'en-US': '/en',
+    },
+  },
   robots: {
     index: true,
     follow: true
@@ -427,6 +434,13 @@ export const mentionsLegalesMetadata: Metadata = {
   ...metadata,
   title: 'Mentions Légales | BTOV Développement',
   description: 'Mentions légales et conditions d\'utilisation du site BTOV Développement.',
+  alternates: {
+    canonical: '/mentions-legales',
+    languages: {
+      'fr-FR': '/mentions-legales',
+      'en-US': '/en/mentions-legales',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Mentions Légales | BTOV Développement',
@@ -441,6 +455,13 @@ export const portfolioMetadata: Metadata = {
   ...metadata,
   title: 'Portfolio | BTOV Développement',
   description: 'Découvrez mes réalisations en développement web : sites vitrines, e-commerce et applications web sur mesure.',
+  alternates: {
+    canonical: '/portfolio',
+    languages: {
+      'fr-FR': '/portfolio',
+      'en-US': '/en/portfolio',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Portfolio | BTOV Développement',
@@ -455,6 +476,13 @@ export const politiqueConfidentialiteMetadata: Metadata = {
   ...metadata,
   title: 'Politique de Confidentialité | BTOV Développement',
   description: 'Politique de confidentialité et protection des données personnelles de BTOV Développement.',
+  alternates: {
+    canonical: '/politique-de-confidentialite',
+    languages: {
+      'fr-FR': '/politique-de-confidentialite',
+      'en-US': '/en/politique-de-confidentialite',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Politique de Confidentialité | BTOV Développement',
@@ -469,6 +497,13 @@ export const homeMetadata: Metadata = {
   ...metadata,
   title: 'Développeur Web freelance à La Rochelle | B to V Développement',
   description: 'Besoin d\'un développeur web freelance à La Rochelle ? B to V Développement réalise des sites modernes, performants et adaptés à vos besoins.',
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fr-FR': '/',
+      'en-US': '/en',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Développeur Web freelance à La Rochelle | B to V Développement',
@@ -483,6 +518,13 @@ export const servicesMetadata: Metadata = {
   ...metadata,
   title: 'Services de Développement Web & SEO | B to V Développement La Rochelle',
   description: 'Découvrez nos services de développement web, optimisation SEO, et création de sites e-commerce à La Rochelle. Solutions personnalisées pour votre entreprise.',
+  alternates: {
+    canonical: '/services',
+    languages: {
+      'fr-FR': '/services',
+      'en-US': '/en/services',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Services de Développement Web & SEO | B to V Développement La Rochelle',
@@ -497,6 +539,13 @@ export const contactMetadata: Metadata = {
   ...metadata,
   title: 'Contactez un développeur Web freelance à La Rochelle | B to V Développement',
   description: 'Contactez B to V Développement, développeur web freelance à La Rochelle. Discutons de votre projet de site web dès aujourd\'hui !',
+  alternates: {
+    canonical: '/contact',
+    languages: {
+      'fr-FR': '/contact',
+      'en-US': '/en/contact',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'Contactez un développeur Web freelance à La Rochelle | B to V Développement',
@@ -511,6 +560,13 @@ export const aboutMetadata: Metadata = {
   ...metadata,
   title: 'À Propos de B to V Développement | Développeur Web freelance La Rochelle',
   description: 'En savoir plus sur B to V Développement, votre développeur web freelance à La Rochelle. Expertise en création de sites web modernes et performants.',
+  alternates: {
+    canonical: '/about',
+    languages: {
+      'fr-FR': '/about',
+      'en-US': '/en/about',
+    },
+  },
   openGraph: {
     ...metadata.openGraph,
     title: 'À Propos de B to V Développement | Développeur Web freelance La Rochelle',

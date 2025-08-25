@@ -1,3 +1,5 @@
+'use client';
+
 import { jsPDF } from 'jspdf';
 
 interface DevisData {

@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { validateContactForm, type ContactFormData } from '@/utils/form-validation';
+import { sanitizeFormData } from '@/utils/server-validation';
 
 export async function POST(request: Request) {
   try {
@@ -18,15 +20,26 @@ export async function POST(request: Request) {
 
     // Utilisation de ReadableStream pour le parsing du body
     const body = await new Response(request.body).json();
-    const { name, email, phone, company, message, budget } = body;
-
-    // Vérification des champs requis
-    if (!name || !email || !message) {
+    
+    // Sanitize les données pour éviter les injections
+    const sanitizedData = sanitizeFormData(body as ContactFormData);
+    
+    // Validation complète des données du formulaire
+    const validation = validateContactForm(sanitizedData);
+    
+    // Si la validation échoue, retourner les erreurs
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Veuillez remplir tous les champs obligatoires' },
+        { 
+          error: 'Validation du formulaire échouée', 
+          details: validation.errors 
+        },
         { status: 400 }
       );
     }
+    
+    // Extraction des données validées
+    const { name, email, phone, company, message, budget } = sanitizedData;
 
     // Préparation du contenu de l'email
     const isExpress = budget === 'express';
@@ -68,6 +81,14 @@ Options disponibles :
       });
 
       console.log('Email envoyé avec succès:', data);
+
+      // Enregistrement de la soumission dans les logs (ou dans une base de données)
+      console.log('Formulaire soumis:', {
+        timestamp: new Date().toISOString(),
+        name,
+        email,
+        type: isExpress ? 'Landing Page Express' : 'Contact général'
+      });
 
       return NextResponse.json(
         { message: 'Votre message a été envoyé avec succès' },

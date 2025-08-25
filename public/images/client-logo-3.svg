@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" rx="4" fill="white"/>
+  <circle cx="30" cy="15" r="5" fill="#4F46E5" fill-opacity="0.2"/>
+  <path d="M30 10V20" stroke="#4F46E5" stroke-width="2"/>
+  <path d="M25 15H35" stroke="#4F46E5" stroke-width="2"/>
+  <path d="M40 15H80" stroke="#4B5563" stroke-width="2"/>
+  <text x="42" y="25" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#111827">Cabinet ML</text>
+</svg>

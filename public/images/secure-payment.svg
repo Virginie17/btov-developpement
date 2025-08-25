@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" rx="4" fill="#F9FAFB"/>
+  <path d="M25 12C25 10.8954 25.8954 10 27 10H33C34.1046 10 35 10.8954 35 12V18C35 19.1046 34.1046 20 33 20H27C25.8954 20 25 19.1046 25 18V12Z" fill="#4F46E5" fill-opacity="0.1"/>
+  <path d="M30 14C28.9 14 28 14.9 28 16C28 17.1 28.9 18 30 18C31.1 18 32 17.1 32 16C32 14.9 31.1 14 30 14ZM30 17.3C29.28 17.3 28.7 16.72 28.7 16C28.7 15.28 29.28 14.7 30 14.7C30.72 14.7 31.3 15.28 31.3 16C31.3 16.72 30.72 17.3 30 17.3ZM30 12C27.79 12 26 13.79 26 16C26 18.21 27.79 20 30 20C32.21 20 34 18.21 34 16C34 13.79 32.21 12 30 12ZM30 19.4C28.12 19.4 26.6 17.88 26.6 16C26.6 14.12 28.12 12.6 30 12.6C31.88 12.6 33.4 14.12 33.4 16C33.4 17.88 31.88 19.4 30 19.4Z" fill="#4F46E5"/>
+  <path d="M44 15H42V13H40V15H38V17H40V19H42V17H44V15Z" fill="#4F46E5"/>
+  <text x="50" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#111827">Paiement</text>
+  <text x="50" y="28" font-family="Arial, sans-serif" font-size="10" fill="#4B5563">sécurisé</text>
+</svg>

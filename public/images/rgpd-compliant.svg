@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" rx="4" fill="#F9FAFB"/>
+  <path d="M30 12C27.24 12 25 14.24 25 17V19C25 19.55 25.45 20 26 20H34C34.55 20 35 19.55 35 19V17C35 14.24 32.76 12 30 12ZM33 18H27V17C27 15.34 28.34 14 30 14C31.66 14 33 15.34 33 17V18Z" fill="#4F46E5"/>
+  <path d="M30 16C30.5523 16 31 15.5523 31 15C31 14.4477 30.5523 14 30 14C29.4477 14 29 14.4477 29 15C29 15.5523 29.4477 16 30 16Z" fill="#4F46E5"/>
+  <path d="M41 15H39V17H41V15Z" fill="#4F46E5"/>
+  <path d="M45 15H43V17H45V15Z" fill="#4F46E5"/>
+  <path d="M37 15H35V17H37V15Z" fill="#4F46E5"/>
+  <text x="50" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#111827">Conforme</text>
+  <text x="50" y="28" font-family="Arial, sans-serif" font-size="10" fill="#4B5563">RGPD</text>
+</svg>

@@ -30,6 +30,38 @@ const imageMapping = {
   }
 };
 
+// Nouvelles images pour l'offre Landing Page Express
+const landingPageExpressImages = {
+  'restaurant-avant.jpg': {
+    output: 'restaurant-avant.webp',
+    description: 'Restaurant - Site web avant transformation',
+    width: 800,
+    height: 600,
+    category: 'landing-page-express'
+  },
+  'restaurant-apres.jpg': {
+    output: 'restaurant-apres.webp',
+    description: 'Restaurant - Landing page après transformation',
+    width: 800,
+    height: 600,
+    category: 'landing-page-express'
+  },
+  'menuiserie-avant.jpg': {
+    output: 'menuiserie-avant.webp',
+    description: 'Menuiserie - Site web avant transformation',
+    width: 800,
+    height: 600,
+    category: 'landing-page-express'
+  },
+  'menuiserie-apres.jpg': {
+    output: 'menuiserie-apres.webp',
+    description: 'Menuiserie - Landing page après transformation',
+    width: 800,
+    height: 600,
+    category: 'landing-page-express'
+  }
+};
+
 // Préréglages pour différents types de contenu
 const presets = {
   blog: {
@@ -47,6 +79,15 @@ const presets = {
   testimonial: {
     effects: ['warm', 'soft'],
     defaultEffect: 'warm'
+  },
+  'landing-page-express': {
+    effects: ['business', 'modern'],
+    defaultEffect: 'modern',
+    sizes: [
+      { width: 800, height: 600, suffix: 'large' },
+      { width: 400, height: 300, suffix: 'medium' },
+      { width: 200, height: 150, suffix: 'small' }
+    ]
   }
 };
 
@@ -69,7 +110,7 @@ const createThumbnail = async (inputPath, filename) => {
 
 // Fonction pour créer une version WebP
 const createWebP = async (inputPath, filename) => {
-  const outputPath = path.join(__dirname, '../public/images/blog/webp', filename.replace('.jpg', '.webp'));
+  const outputPath = path.join(__dirname, '../public/images/blog/webp', filename.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
   await sharp(inputPath)
     .webp({
       quality: 85,
@@ -78,6 +119,83 @@ const createWebP = async (inputPath, filename) => {
     .toFile(outputPath);
   console.log(`✓ Created WebP version: ${path.basename(outputPath)}`);
   return outputPath;
+};
+
+// Fonction pour créer des images responsive pour différentes tailles d'écran
+const createResponsiveImages = async (inputPath, filename, category) => {
+  if (!presets[category] || !presets[category].sizes) {
+    return null;
+  }
+
+  const results = [];
+  const baseName = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+  const outputDir = path.join(__dirname, `../public/images/${category}`);
+
+  // Assurer que le répertoire existe
+  try {
+    await fs.mkdir(outputDir, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      throw error;
+    }
+  }
+
+  for (const size of presets[category].sizes) {
+    const outputFilename = `${baseName}-${size.suffix}.webp`;
+    const outputPath = path.join(outputDir, outputFilename);
+
+    await sharp(inputPath)
+      .resize(size.width, size.height, {
+        fit: 'cover',
+        position: 'center'
+      })
+      .webp({
+        quality: 80,
+        effort: 6
+      })
+      .toFile(outputPath);
+
+    results.push({
+      path: `/images/${category}/${outputFilename}`,
+      width: size.width,
+      height: size.height,
+      suffix: size.suffix
+    });
+
+    console.log(`✓ Created responsive image: ${outputFilename}`);
+  }
+
+  return results;
+};
+
+// Fonction pour générer des images LQIP (Low Quality Image Placeholders)
+const createLQIP = async (inputPath, filename, category) => {
+  const outputDir = path.join(__dirname, `../public/images/${category}/lqip`);
+  const outputFilename = filename.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+  const outputPath = path.join(outputDir, outputFilename);
+
+  // Assurer que le répertoire existe
+  try {
+    await fs.mkdir(outputDir, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      throw error;
+    }
+  }
+
+  await sharp(inputPath)
+    .resize(20, 20, {
+      fit: 'inside',
+    })
+    .blur(10)
+    .webp({
+      quality: 20,
+      effort: 3
+    })
+    .toFile(outputPath);
+
+  console.log(`✓ Created LQIP: ${outputFilename}`);
+  return `/images/${category}/lqip/${outputFilename}`;
 };
 
 // Fonction pour ajouter des effets
@@ -125,7 +243,7 @@ const addEffect = async (inputPath, filename, effectType) => {
         .modulate({ brightness: 0.95, saturation: 0.7, hue: 15 })
         .tint({ r: 240, g: 220, b: 180 })
         .gamma(1.1)
-        .sepiatown();
+        .sepia();
       break;
     case 'event':
       pipeline = pipeline
@@ -211,11 +329,60 @@ const optimizeImage = async (inputPath, outputPath, description, effect) => {
       path: outputPath,
       description,
       thumbnail: `/images/blog/thumbnails/${filename}`,
-      webp: `/images/blog/webp/${filename.replace('.jpg', '.webp')}`,
+      webp: `/images/blog/webp/${filename.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`,
       effect: `/images/blog/effects/${filename}`
     };
   } catch (error) {
     console.error(`× Error processing ${inputPath}:`, error);
+    return null;
+  }
+};
+
+// Optimisation spécifique pour les images de l'offre Landing Page Express
+const optimizeLandingPageExpressImage = async (inputPath, outputConfig) => {
+  try {
+    const { output, description, width, height, category } = outputConfig;
+    const outputDir = path.join(__dirname, `../public/images/${category}`);
+    
+    // Assurer que le répertoire existe
+    try {
+      await fs.mkdir(outputDir, { recursive: true });
+    } catch (error) {
+      if (error.code !== 'EEXIST') {
+        throw error;
+      }
+    }
+    
+    const outputPath = path.join(outputDir, output);
+    
+    await sharp(inputPath)
+      .resize(width, height, {
+        fit: 'cover',
+        position: 'center'
+      })
+      .webp({
+        quality: 85,
+        effort: 6
+      })
+      .toFile(outputPath);
+    
+    console.log(`✓ Optimized Landing Page Express image: ${output}`);
+    
+    // Créer des versions responsives et LQIP
+    const responsiveImages = await createResponsiveImages(inputPath, output, category);
+    const lqipPath = await createLQIP(inputPath, output, category);
+    
+    return {
+      path: `/images/${category}/${output}`,
+      description,
+      width,
+      height,
+      category,
+      responsiveImages,
+      lqip: lqipPath
+    };
+  } catch (error) {
+    console.error(`× Error processing Landing Page Express image ${inputPath}:`, error);
     return null;
   }
 };
@@ -250,12 +417,33 @@ const generateMetadata = async (images) => {
   );
 };
 
+// Générer les métadonnées pour les images de l'offre Landing Page Express
+const generateLandingPageExpressMetadata = async (images) => {
+  const metadata = images.filter(Boolean).map(img => ({
+    path: img.path,
+    description: img.description,
+    dimensions: {
+      width: img.width,
+      height: img.height
+    },
+    category: img.category,
+    responsiveImages: img.responsiveImages,
+    lqip: img.lqip
+  }));
+
+  await fs.writeFile(
+    path.join(__dirname, '../public/images/landing-page-express/metadata.json'),
+    JSON.stringify(metadata, null, 2)
+  );
+};
+
 const main = async () => {
   const sourceDir = path.join(__dirname, '../public/images');
   const targetDir = path.join(__dirname, '../public/images/blog');
   
   console.log('🔄 Starting image processing...');
   
+  // Traitement des images standard
   const processedImages = await Promise.all(
     Object.entries(imageMapping).map(async ([source, config]) => {
       const sourcePath = path.join(sourceDir, source);
@@ -271,7 +459,25 @@ const main = async () => {
     })
   );
 
+  // Traitement des images pour l'offre Landing Page Express
+  const processedLandingPageExpressImages = await Promise.all(
+    Object.entries(landingPageExpressImages).map(async ([source, config]) => {
+      const sourcePath = path.join(sourceDir, source);
+      
+      try {
+        await fs.access(sourcePath);
+        return await optimizeLandingPageExpressImage(sourcePath, config);
+      } catch (error) {
+        console.error(`× Source image not found: ${source}`);
+        return null;
+      }
+    })
+  );
+
+  // Génération des métadonnées
   await generateMetadata(processedImages);
+  await generateLandingPageExpressMetadata(processedLandingPageExpressImages);
+  
   console.log('✨ Image processing complete!');
 };
 

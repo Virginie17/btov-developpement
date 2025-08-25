@@ -1,0 +1,119 @@
+/* Styles pour l'accessibilité */
+
+/* Styles de focus pour les utilisateurs qui naviguent au clavier */
+.user-is-tabbing *:focus {
+  outline: 2px solid #2563eb !important;
+  outline-offset: 2px !important;
+}
+
+/* Masquer l'outline pour les utilisateurs qui n'utilisent pas le clavier */
+body:not(.user-is-tabbing) *:focus {
+  outline: none !important;
+}
+
+/* Skip links - liens pour sauter au contenu principal */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #ffffff;
+  color: #2563eb;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Styles pour les éléments focusables mais visuellement cachés */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only.focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Amélioration du contraste pour les éléments interactifs */
+button:focus, 
+a:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+}
+
+/* Styles pour les éléments désactivés */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Amélioration de la visibilité des liens */
+a {
+  text-decoration: underline;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+/* Styles pour les formulaires accessibles */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input, 
+select, 
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+/* Amélioration de la visibilité des erreurs de formulaire */
+.form-error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+input.error, 
+select.error, 
+textarea.error {
+  border-color: #dc2626;
+}
+
+/* Styles pour les tooltips accessibles */
+[role="tooltip"] {
+  position: absolute;
+  padding: 0.5rem;
+  background: #1f2937;
+  color: white;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  max-width: 250px;
+  z-index: 10;
+}

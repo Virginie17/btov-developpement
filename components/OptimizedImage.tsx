@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type PresetType = 'blog' | 'portfolio' | 'event' | 'testimonial';
@@ -17,6 +17,9 @@ interface OptimizedImageProps {
   className?: string;
   transition?: boolean;
   quality?: number;
+  lazyLoadingOffset?: number; 
+  aboveTheFold?: boolean; 
+  fetchPriority?: 'high' | 'low' | 'auto'; 
 }
 
 const presets = {
@@ -67,7 +70,10 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   priority = false,
   className = '',
   transition = true,
-  quality = 75
+  quality = 75,
+  lazyLoadingOffset = 300, 
+  aboveTheFold = false, 
+  fetchPriority = 'auto'
 }) => {
   const [imageSrc, setImageSrc] = useState<string>(src);
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,8 +81,47 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const [currentEffect, setCurrentEffect] = useState<EffectType | undefined>(
     effect || (preset ? presets[preset].defaultEffect : undefined)
   );
+  const [isVisible, setIsVisible] = useState<boolean>(aboveTheFold || priority); 
+  const [shouldLoad, setShouldLoad] = useState<boolean>(aboveTheFold || priority);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (priority || aboveTheFold) {
+      setIsVisible(true);
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        setIsVisible(entry.isIntersecting);
+        
+        if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + lazyLoadingOffset) {
+          setShouldLoad(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        rootMargin: `0px 0px ${lazyLoadingOffset}px 0px`, 
+        threshold: 0.01 
+      }
+    );
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
+    }
+
+    return () => {
+      if (imageRef.current) {
+        observer.unobserve(imageRef.current);
+      }
+    };
+  }, [priority, aboveTheFold, lazyLoadingOffset]);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+
     const checkImageSupport = async () => {
       try {
         const avifSupported = await checkAVIFSupport();
@@ -105,10 +150,10 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     };
 
     checkImageSupport();
-  }, [src, currentEffect]);
+  }, [src, currentEffect, shouldLoad]);
 
   useEffect(() => {
-    if (preset && transition) {
+    if (preset && transition && shouldLoad) {
       const effects = presets[preset].effects;
       let currentIndex = effects.indexOf(currentEffect || effects[0]);
       
@@ -119,7 +164,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
       return () => clearInterval(interval);
     }
-  }, [preset, currentEffect, transition]);
+  }, [preset, currentEffect, transition, shouldLoad]);
 
   const imageVariants = {
     enter: { opacity: 0, scale: 1.05 },
@@ -130,43 +175,64 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const actualWidth = width || 800;
   const actualHeight = height || 600;
 
+  const aspectRatio = actualHeight / actualWidth;
+
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={imageSrc}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          variants={imageVariants}
-          transition={{ duration: 0.3 }}
-          className="relative"
-        >
-          <Image
-            src={imageSrc}
-            alt={alt}
-            width={actualWidth}
-            height={actualHeight}
-            priority={priority}
-            quality={quality}
-            className={`transition-all duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}
-            placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(actualWidth, actualHeight))}`}
-            onLoadingComplete={() => setLoading(false)}
-            onError={() => {
-              setLoading(false);
-              setImageSrc(src);
-              setFormat('original');
-            }}
-          />
-          {loading && (
-            <div 
-              className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
-              style={{ backgroundSize: '200% 100%' }}
+    <div 
+      ref={imageRef}
+      className={`relative overflow-hidden ${className}`}
+      style={{ 
+        aspectRatio: `${actualWidth} / ${actualHeight}`,
+        width: '100%',
+        maxWidth: actualWidth
+      }}
+    >
+      {shouldLoad ? (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={imageSrc}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={imageVariants}
+            transition={{ duration: 0.3 }}
+            className="relative w-full h-full"
+          >
+            <Image
+              src={imageSrc}
+              alt={alt}
+              width={actualWidth}
+              height={actualHeight}
+              priority={priority || aboveTheFold}
+              quality={quality}
+              className={`transition-all duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(actualWidth, actualHeight))}`}
+              onLoadingComplete={() => setLoading(false)}
+              onError={() => {
+                setLoading(false);
+                setImageSrc(src);
+                setFormat('original');
+              }}
+              sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${actualWidth}px`}
+              fetchPriority={fetchPriority}
+              loading={priority || aboveTheFold ? "eager" : "lazy"}
             />
-          )}
-        </motion.div>
-      </AnimatePresence>
+            {loading && (
+              <div 
+                className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                style={{ backgroundSize: '200% 100%' }}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      ) : (
+        <div 
+          className="w-full h-full bg-gray-200 animate-pulse"
+          style={{ aspectRatio: `${actualWidth} / ${actualHeight}` }}
+          aria-label={`Image placeholder: ${alt}`}
+        />
+      )}
     </div>
   );
 };

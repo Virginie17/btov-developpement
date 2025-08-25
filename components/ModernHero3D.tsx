@@ -3,40 +3,49 @@
 import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { 
-  Environment, 
   Float, 
   PerspectiveCamera,
-  useGLTF,
   MeshDistortMaterial,
-  ContactShadows
+  ContactShadows,
+  Sparkles
 } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import Link from 'next/link';
 
 interface SceneProps {
-  mouse: React.MutableRefObject<[number, number]>;
+  mouse: { x: number; y: number };
   isMobile: boolean;
+  scrollY: number;
 }
 
-function Scene({ mouse, isMobile }: SceneProps) {
+// Composant Scene qui ne contient QUE des éléments Three.js
+function Scene({ mouse, isMobile, scrollY }: SceneProps) {
   const mesh = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 
   // Ajustement de la taille en fonction de la largeur de l'écran
-  const scale = isMobile ? [1.2, 1.2, 1.2] : [2.2, 2.2, 2.2];
+  const scale = isMobile ? 1.2 : 2.2;
   
-  useFrame(() => {
+  useFrame((state) => {
     if (mesh.current) {
+      // Animation de rotation fluide basée sur la position de la souris
       mesh.current.rotation.x = THREE.MathUtils.lerp(
         mesh.current.rotation.x,
-        mouse.current[1] / viewport.height,
+        (mouse.y / viewport.height) * 0.5,
         0.1
       );
       mesh.current.rotation.y = THREE.MathUtils.lerp(
         mesh.current.rotation.y,
-        mouse.current[0] / viewport.width,
+        (mouse.x / viewport.width) * 0.5 + state.clock.getElapsedTime() * 0.1,
+        0.1
+      );
+
+      // Animation de déformation basée sur le scroll
+      const scrollFactor = scrollY / 1000;
+      mesh.current.position.y = THREE.MathUtils.lerp(
+        mesh.current.position.y,
+        -scrollFactor * 2,
         0.1
       );
     }
@@ -48,38 +57,177 @@ function Scene({ mouse, isMobile }: SceneProps) {
         speed={1.5}
         rotationIntensity={0.5}
         floatIntensity={0.5}
-        position={[0, isMobile ? 0 : 0.5, 0] as [number, number, number]}
+        position={[0, isMobile ? 0 : 0.5, 0]}
       >
-        <mesh ref={mesh} scale={scale as [number, number, number]}>
-          <sphereGeometry args={[1, 64, 64]} />
+        <mesh ref={mesh} scale={scale}>
+          <sphereGeometry args={[1, 128, 128]} />
           <MeshDistortMaterial
             color="#4338ca"
-            envMapIntensity={1}
+            envMapIntensity={2}
             clearcoat={1}
             clearcoatRoughness={0}
-            metalness={0.5}
+            metalness={0.75}
             distort={isMobile ? 0.3 : 0.4}
-            speed={2}
+            speed={3}
+            roughness={0.2}
           />
         </mesh>
+
+        <Sparkles
+          count={50}
+          scale={4}
+          size={2}
+          speed={0.4}
+          opacity={0.5}
+          color="#8b5cf6"
+        />
       </Float>
 
       <ContactShadows
         position={[0, -2, 0]}
-        opacity={0.5}
+        opacity={0.7}
         scale={isMobile ? 6 : 10}
-        blur={2}
+        blur={2.5}
         far={4}
+        color="#4338ca"
+      />
+
+      <color attach="background" args={['#000']} />
+      <ambientLight intensity={0.8} />
+      <spotLight
+        position={[10, 10, 10]}
+        angle={0.15}
+        penumbra={1}
+        intensity={1.5}
+        color="#4338ca"
+      />
+      {/* Ajout de plusieurs lumières pour créer un environnement riche sans HDR */}
+      <hemisphereLight intensity={0.5} color="#4338ca" groundColor="#000000" />
+      <directionalLight 
+        position={[-5, 5, 5]} 
+        intensity={0.5} 
+        color="#8b5cf6" 
+      />
+      <pointLight 
+        position={[5, -5, 5]} 
+        intensity={0.5} 
+        color="#3b82f6" 
       />
     </>
   );
 }
 
+// Composant pour le contenu textuel et les boutons
+function HeroContent({ textOpacity }: { textOpacity: number }) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: textOpacity }}
+      transition={{ duration: 1 }}
+      className="text-center max-w-4xl mx-auto flex flex-col gap-8"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="flex flex-col gap-4"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="bg-white/5 backdrop-blur-sm rounded-full px-4 py-1 border border-white/10 inline-block mx-auto"
+        >
+          <span className="text-sm text-gray-300 flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            Disponible pour nouveaux projets
+          </span>
+        </motion.div>
+
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 via-primary-400 to-primary-500">
+            Transformons vos idées
+          </span>
+          <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600">
+            en réalité digitale
+          </span>
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
+          Création et Refonte de sites web professionnels à La Rochelle
+        </p>
+        
+        {/* Badges de confiance avec animation */}
+        <div className="flex justify-center gap-4 mt-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            className="bg-white/5 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/10 hover:border-primary-500/50 transition-all"
+          >
+            <p className="text-2xl font-bold text-white">10+</p>
+            <p className="text-sm text-gray-400">Projets livrés</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="bg-white/5 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/10 hover:border-primary-500/50 transition-all"
+          >
+            <p className="text-2xl font-bold text-white">100%</p>
+            <p className="text-sm text-gray-400">Satisfaction</p>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        className="flex flex-col items-center gap-6"
+      >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
+          <Link
+            href="/contact"
+            className="group w-full sm:w-auto bg-gradient-to-r from-primary-500 to-primary-600 text-white px-8 py-4 rounded-lg font-medium hover:from-primary-600 hover:to-primary-700 transition-all hover:scale-105 shadow-lg hover:shadow-primary-500/20 text-center flex items-center justify-center gap-2"
+          >
+            <span>Démarrer un projet</span>
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
+          <Link
+            href="/portfolio"
+            className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-lg font-medium hover:bg-white/20 transition-all border border-white/30 hover:border-primary-500/50 text-center"
+          >
+            Voir mes réalisations
+          </Link>
+        </div>
+
+        {/* Micro-conversion avec animation */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.5 }}
+          className="text-gray-400 text-sm"
+        >
+          ou{' '}
+          <Link 
+            href="/audit-gratuit"
+            className="text-primary-400 hover:text-primary-300 underline underline-offset-4 transition-colors"
+          >
+            obtenir un audit gratuit de votre site
+          </Link>
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function ModernHero3D() {
-  const mouse = useRef<[number, number]>([0, 0]);
+  const mouse = useRef({ x: 0, y: 0 });
   const [textOpacity, setTextOpacity] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     setIsMounted(true);
@@ -92,103 +240,52 @@ export default function ModernHero3D() {
 
     const handleMouseMove = (event: MouseEvent) => {
       const sensitivity = window.innerWidth < 768 ? 0.05 : 0.1;
-      mouse.current = [
-        (event.clientX - window.innerWidth / 2) * sensitivity,
-        (event.clientY - window.innerHeight / 2) * sensitivity
-      ];
+      mouse.current.x = (event.clientX - window.innerWidth / 2) * sensitivity;
+      mouse.current.y = (event.clientY - window.innerHeight / 2) * sensitivity;
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
     setTextOpacity(1);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
   if (!isMounted) {
-    return null; // Rendu côté serveur : ne rien afficher
+    return null;
   }
 
   return (
-    <div className="h-screen w-full relative">
-      <Canvas
-        className="absolute inset-0"
-        camera={{ position: [0, 0, isMobile ? 4 : 5], fov: 45 }}
-      >
-        <PerspectiveCamera
-          makeDefault
-          position={[0, 0, isMobile ? 4 : 5]}
-          fov={45}
-        />
-        <color attach="background" args={['#000']} />
-        <ambientLight intensity={0.5} />
-        <spotLight
-          position={[10, 10, 10]}
-          angle={0.15}
-          penumbra={1}
-          intensity={1}
-        />
-        <Scene mouse={mouse} isMobile={isMobile} />
-        <Environment preset="city" />
-        <EffectComposer>
-          <Bloom
-            intensity={1}
-            luminanceThreshold={0.8}
-            luminanceSmoothing={0.9}
+    <div className="h-screen w-full relative overflow-hidden">
+      {/* Canvas container - Uniquement pour Three.js */}
+      <div className="absolute inset-0">
+        <Canvas
+          camera={{
+            position: [0, 0, isMobile ? 4 : 5],
+            fov: 45
+          }}
+          dpr={[1, 2]}
+        >
+          <Scene 
+            mouse={mouse.current} 
+            isMobile={isMobile} 
+            scrollY={scrollY} 
           />
-        </EffectComposer>
-      </Canvas>
+        </Canvas>
+      </div>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
-        <div className="max-w-7xl w-full mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: textOpacity, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8"
-            >
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">
-                  Transformons vos idées
-                </span>
-                <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-600">
-                  en réalité digitale
-                </span>
-              </h1>
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
-                Création et Refonte de sites web professionnels à La Rochelle
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto bg-primary-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-primary-600 transition-all hover:scale-105 shadow-lg text-center"
-              >
-                Démarrer un projet
-              </Link>
-              <Link
-                href="/portfolio"
-                className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-white/20 transition-all border border-white/30 text-center"
-              >
-                Voir mes réalisations
-              </Link>
-            </motion.div>
-          </motion.div>
+      {/* Overlay pour le contenu DOM - Complètement séparé du Canvas */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
+        <div className="container mx-auto px-4">
+          <HeroContent textOpacity={textOpacity} />
         </div>
       </div>
     </div>

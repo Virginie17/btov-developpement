@@ -1,36 +1,12 @@
-# Allow all crawlers
+# *
 User-agent: *
 Allow: /
-Allow: /sitemap.xml
+Disallow: /admin
+Disallow: /api
 
-# Optimisation du crawl
-Crawl-delay: 1
-
-# Sitemap
-Sitemap: https://btov-developpement.fr/sitemap.xml
-
-# Pages principales
-Allow: /services
-Allow: /tarifs
-Allow: /portfolio
-Allow: /contact
-
-# Ressources statiques
-Allow: /images/
-Allow: /*.js$
-Allow: /*.css$
-
-# Interdire l'accès aux pages d'administration et fichiers sensibles
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.json$
-Disallow: /*.md$
-Disallow: /*.txt$
-Disallow: /api/
-Disallow: /cgi-bin/
-Disallow: /tmp/
-
-# Clean parameters
-Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
-
+# Host
 Host: https://btov-developpement.fr
+
+# Sitemaps
+Sitemap: https://btov-developpement.fr/sitemap.xml
+Sitemap: https://btov-developpement.fr/server-sitemap.xml

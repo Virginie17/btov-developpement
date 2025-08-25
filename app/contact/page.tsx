@@ -53,10 +53,10 @@ export default function Contact() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
         <div className="container mx-auto px-4 max-w-5xl">
           <h1 className="text-5xl font-bold mb-3 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-            Parlons de votre projet
+            Parlons de votre besoin
           </h1>
           <p className="text-center text-gray-600 mb-12 text-lg">
-            Je suis là pour transformer vos idées en solutions digitales performantes
+            Je suis là pour vous accompagner dans vos démarches administratives, l'usage du numérique, la création et la refonte de votre site web
           </p>
 
           <div className="bg-white rounded-3xl shadow-2xl p-8 backdrop-blur-sm bg-opacity-80">
