@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
-import { withLazyLoad } from '../../utils/dynamic-loader';
+import { withLazyLoad } from '@/utils/dynamic-import';
 import OptimizedImage from '@/components/OptimizedImage';
 
 // Composants chargés dynamiquement
