@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * Utilitaires d'optimisation d'images
  * Ces fonctions permettent d'améliorer les performances de chargement des images

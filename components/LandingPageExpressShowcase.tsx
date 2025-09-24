@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { getOptimizedImageProps } from '../utils/image-optimization';
 
@@ -91,73 +91,8 @@ const examples: TransformationExample[] = [
 
 const LandingPageExpressShowcase: React.FC = () => {
   const [activeExample, setActiveExample] = useState<string>(examples[0].id);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
-  const [metadata, setMetadata] = useState<any>(null);
-
-  useEffect(() => {
-    // Charger les métadonnées des images optimisées
-    const loadMetadata = async () => {
-      try {
-        const response = await fetch('/images/landing-page-express/metadata.json');
-        if (response.ok) {
-          const data = await response.json();
-          setMetadata(data);
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement des métadonnées:', error);
-      }
-    };
-
-    loadMetadata();
-  }, []);
-
-  useEffect(() => {
-    // Précharger les images pour une meilleure expérience utilisateur
-    const preloadImages = async () => {
-      setImagesLoaded(false);
-      
-      const imagesToPreload = examples.map(example => [
-        example.before.path,
-        example.after.path
-      ]).flat();
-      
-      const promises = imagesToPreload.map(src => {
-        return new Promise((resolve) => {
-          const img = new globalThis.Image();
-          img.src = src;
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(false);
-        });
-      });
-      
-      await Promise.all(promises);
-      setImagesLoaded(true);
-    };
-    
-    preloadImages();
-  }, []);
 
   const currentExample = examples.find(ex => ex.id === activeExample) || examples[0];
-
-  // Fonction pour obtenir les sources d'images responsives
-  const getResponsiveSrcSet = (basePath: string) => {
-    if (!metadata) return undefined;
-    
-    const imageData = metadata.find((img: any) => img.path === basePath);
-    if (!imageData || !imageData.responsiveImages) return undefined;
-    
-    return imageData.responsiveImages
-      .map((img: any) => `${img.path} ${img.width}w`)
-      .join(', ');
-  };
-
-  // Fonction pour obtenir l'image LQIP (Low Quality Image Placeholder)
-  const getLqipSrc = (basePath: string) => {
-    if (!metadata) return undefined;
-    
-    const imageData = metadata.find((img: any) => img.path === basePath);
-    return imageData?.lqip;
-  };
 
   return (
     <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
@@ -204,22 +139,12 @@ const LandingPageExpressShowcase: React.FC = () => {
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold text-gray-700 mb-2">Avant la transformation</h3>
               <div className="relative h-[400px] w-full overflow-hidden rounded-lg">
-                {getLqipSrc(currentExample.before.path) && (
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center blur-sm"
-                    style={{ 
-                      backgroundImage: `url(${getLqipSrc(currentExample.before.path)})`,
-                      opacity: imagesLoaded ? 0 : 1,
-                      transition: 'opacity 0.3s ease-in-out'
-                    }}
-                  />
-                )}
                 <Image
                   src={currentExample.before.path}
                   alt={currentExample.before.alt}
                   width={currentExample.before.width}
                   height={currentExample.before.height}
-                  className={`rounded-lg object-cover h-full w-full transition-opacity duration-300 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className="rounded-lg object-cover h-full w-full"
                   {...getOptimizedImageProps(currentExample.before.alt)}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
@@ -232,22 +157,12 @@ const LandingPageExpressShowcase: React.FC = () => {
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold text-gray-700 mb-2">Après la transformation</h3>
               <div className="relative h-[400px] w-full overflow-hidden rounded-lg">
-                {getLqipSrc(currentExample.after.path) && (
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center blur-sm"
-                    style={{ 
-                      backgroundImage: `url(${getLqipSrc(currentExample.after.path)})`,
-                      opacity: imagesLoaded ? 0 : 1,
-                      transition: 'opacity 0.3s ease-in-out'
-                    }}
-                  />
-                )}
                 <Image
                   src={currentExample.after.path}
                   alt={currentExample.after.alt}
                   width={currentExample.after.width}
                   height={currentExample.after.height}
-                  className={`rounded-lg object-cover h-full w-full transition-opacity duration-300 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className="rounded-lg object-cover h-full w-full"
                   {...getOptimizedImageProps(currentExample.after.alt, true)}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
